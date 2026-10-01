@@ -1,0 +1,24 @@
+\frametitle{Four lines, on your own embeddings}
+\begin{lstlisting}
+import numpy as np
+from ripser import ripser
+from persim import plot_diagrams
+
+X = model.encode(texts)                # or any embedding / hidden state
+dgms = ripser(X, maxdim=1, thresh=2.0)["dgms"]
+plot_diagrams(dgms, show=True)
+
+h1 = dgms[1]
+order = np.argsort(-(h1[:, 1] - h1[:, 0]))
+print(h1[order][:5])                    # five longest-lived loops
+        \end{lstlisting}
+        \vspace{0.4em}
+        \small
+        \alert{Run this before the lecture and show saved figures} --- Rips on real data is
+        not a live-demo activity. Passing \texttt{distance\_matrix=True} lets you use cosine
+        or any learned metric instead of Euclidean.
+
+        \vspace{0.3em}
+        Software: \texttt{ripser} (fastest for Rips), \texttt{GUDHI} (broadest),
+        \texttt{giotto-tda} (scikit-learn \texttt{fit}/\texttt{transform} API --- drops into
+        an existing pipeline directly), \texttt{CubicalRipser} (images and feature maps).
