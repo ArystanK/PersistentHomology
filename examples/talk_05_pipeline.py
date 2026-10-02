@@ -37,6 +37,9 @@ from persistent_homology import vectorization as vec
 
 THRESHOLD = 2.4
 GRID = np.linspace(0.0, THRESHOLD, 60)
+# The persistence image's (birth, lifetime) window, fixed so the figure can
+# label its axes in the same units the image was computed in.
+IMAGE_WINDOW = (0.0, 1.6)
 SEED = 3
 
 
@@ -123,7 +126,8 @@ def main() -> None:
     print("\nThree vectorisations of that same H1 diagram")
     curve = vec.betti_curve(h1, GRID)
     landscape = vec.persistence_landscape(h1, GRID, n_layers=4)
-    image = vec.persistence_image(h1, resolution=(16, 16))
+    image = vec.persistence_image(h1, resolution=(16, 16), birth_range=IMAGE_WINDOW,
+                                  lifetime_range=IMAGE_WINDOW)
     for label, array in (("Betti curve", curve), ("landscape (4 layers)", landscape),
                          ("persistence image", image)):
         print(f"  {label:22s} shape {str(array.shape):>10s}  "
@@ -213,34 +217,42 @@ def main() -> None:
     viz.persistence_diagram(result, figure.add_subplot(2, 3, 2),
                             title="its diagram (not a vector)")
 
+    def finish(ax, title, xlabel, ylabel=None, legend=False):
+        ax.set_title(title, color=viz.INK, fontsize=11, loc="left", pad=10)
+        ax.set_xlabel(xlabel, color=viz.INK_SECONDARY, fontsize=10)
+        if ylabel:
+            ax.set_ylabel(ylabel, color=viz.INK_SECONDARY, fontsize=10)
+        viz.style_axes(ax)
+        if legend:
+            for text in ax.legend(frameon=False, fontsize=8).get_texts():
+                text.set_color(viz.INK_SECONDARY)
+
     ax = figure.add_subplot(2, 3, 3)
     ax.plot(GRID, curve, color=viz.DIM_COLORS[1], linewidth=2.0)
-    ax.set_title("Betti curve", color=viz.INK, fontsize=11, loc="left")
-    ax.set_xlabel("scale", color=viz.INK_SECONDARY, fontsize=10)
+    ax.set_yticks(range(int(curve.max()) + 1))
+    finish(ax, "Betti curve", "scale", r"$\beta_1$")
 
     ax = figure.add_subplot(2, 3, 4)
     for layer in range(landscape.shape[0]):
         ax.plot(GRID, landscape[layer], linewidth=2.0 - 0.4 * layer,
                 color=viz.DIM_COLORS[1], alpha=1.0 - 0.22 * layer,
                 label=f"layer {layer + 1}")
-    ax.set_title("persistence landscape", color=viz.INK, fontsize=11, loc="left")
-    ax.set_xlabel("scale", color=viz.INK_SECONDARY, fontsize=10)
-    ax.legend(frameon=False, fontsize=8)
+    finish(ax, "persistence landscape", "scale", legend=True)
 
+    # Drawn in the units it was computed in, so the bright spot can be read off
+    # as the loop: born near 0.4, living about 1.3.
     ax = figure.add_subplot(2, 3, 5)
-    ax.imshow(image, origin="lower", cmap="magma", aspect="auto")
-    ax.set_title("persistence image", color=viz.INK, fontsize=11, loc="left")
-    ax.set_xlabel("birth", color=viz.INK_SECONDARY, fontsize=10)
-    ax.set_ylabel("lifetime", color=viz.INK_SECONDARY, fontsize=10)
+    ax.imshow(image, origin="lower", cmap="magma",
+              extent=(*IMAGE_WINDOW, *IMAGE_WINDOW), aspect="equal")
+    finish(ax, "persistence image", "birth", "lifetime")
+    ax.grid(False)
 
     ax = figure.add_subplot(2, 3, 6)
     ax.hist(null_scores, bins=8, color=viz.INK_MUTED, alpha=0.75,
             label="null replicates")
     ax.axvline(observed, color=viz.DIM_COLORS[1], linewidth=2.2,
                label="observed circle")
-    ax.set_title("observed vs. null", color=viz.INK, fontsize=11, loc="left")
-    ax.set_xlabel("longest H1 bar", color=viz.INK_SECONDARY, fontsize=10)
-    ax.legend(frameon=False, fontsize=8)
+    finish(ax, "observed vs. null", r"longest $H_1$ bar", "replicates", legend=True)
 
     figure.suptitle("From a diagram to a feature vector, and a null model to "
                     "compare it against",

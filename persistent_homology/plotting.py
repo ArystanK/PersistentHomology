@@ -69,18 +69,27 @@ def _finite_max(diagrams: Dict[int, np.ndarray]) -> float:
 
 
 def persistence_diagram(result, ax=None, title: str = "Persistence diagram",
-                        dims: Sequence[int] | None = None, alpha: float = 0.85):
+                        dims: Sequence[int] | None = None, alpha: float = 0.85,
+                        top: float | None = None):
     """Scatter of (birth, death).  Distance above the diagonal is lifetime, so
     the meaningful features are the points far from it and the noise piles up
     along it.  Essential classes sit on the dashed infinity line at the top.
+
+    ``top`` is the largest finite value the axes must show.  Pass the same value
+    to several diagrams to put them on one scale: otherwise each one stretches
+    to fit its own points, and a diagram of pure noise looks as dramatic as one
+    with a real feature.
     """
+    from matplotlib.ticker import FixedLocator, FuncFormatter, MaxNLocator
+
     diagrams = _as_diagrams(result)
     if ax is None:
         _, ax = plt.subplots(figsize=(4.8, 4.8))
     if dims is None:
         dims = sorted(diagrams)
 
-    top = _finite_max(diagrams)
+    if top is None:
+        top = _finite_max(diagrams)
     pad = 0.06 * top if top > 0 else 0.1
     infinity = top + 3 * pad
 
@@ -89,8 +98,6 @@ def persistence_diagram(result, ax=None, title: str = "Persistence diagram",
     ax.fill_between([-pad, infinity + pad], [-pad, infinity + pad],
                     -pad, color=GRID, alpha=0.45, linewidth=0, zorder=0)
     ax.axhline(infinity, color=INK_MUTED, linewidth=1.0, linestyle=(0, (4, 3)), zorder=1)
-    ax.text(-pad * 0.5, infinity, r"$\infty$", color=INK_SECONDARY,
-            fontsize=11, va="center", ha="right")
 
     handles = []
     for d in dims:
@@ -101,9 +108,24 @@ def persistence_diagram(result, ax=None, title: str = "Persistence diagram",
         death = np.where(np.isfinite(dgm[:, 1]), dgm[:, 1], infinity)
         ax.scatter(dgm[:, 0], death, s=44, marker=marker, facecolor=color,
                    edgecolor=SURFACE, linewidth=1.0, alpha=alpha, zorder=3)
+        # coincident points would otherwise read as one: say how many there are
+        spots, counts = np.unique(np.round(np.column_stack([dgm[:, 0], death]), 9),
+                                  axis=0, return_counts=True)
+        for (x, y), n in zip(spots, counts):
+            if n > 1:
+                ax.annotate(f"×{n}", xy=(x, y), xytext=(7, 0), textcoords="offset points",
+                            color=color, fontsize=9, va="center", zorder=4)
         handles.append(Line2D([], [], linestyle="none", marker=marker, color=color,
                               markeredgecolor=SURFACE, markersize=7,
                               label=f"$H_{d}$  ({len(dgm)})"))
+
+    # infinity is a tick of its own on the death axis, so its label never sits
+    # on top of the essential classes plotted at birth 0
+    finite_ticks = [t for t in MaxNLocator(nbins=5).tick_values(0, top)
+                    if 0 <= t <= infinity - 1.5 * pad]
+    ax.yaxis.set_major_locator(FixedLocator(finite_ticks + [infinity]))
+    ax.yaxis.set_major_formatter(FuncFormatter(
+        lambda value, _: r"$\infty$" if np.isclose(value, infinity) else f"{value:g}"))
 
     ax.set_xlim(-pad, infinity + pad)
     ax.set_ylim(-pad, infinity + pad)
@@ -135,6 +157,11 @@ def barcode(result, ax=None, title: str = "Persistence barcode",
 
     top = _finite_max(diagrams)
     end = top * 1.08 if top > 0 else 1.0
+    # one bar per unit of height: past ~30 bars a 2pt line is thicker than the
+    # gap between neighbours and adjacent bars fuse into one
+    n_shown = sum(min(len(np.asarray(diagrams.get(d, [])).reshape(-1, 2)), max_bars_per_dim)
+                  for d in dims)
+    bar_width = 2.0 if n_shown <= 30 else max(0.6, 2.0 * 30 / n_shown)
 
     y = 0
     handles, ticks, tick_labels = [], [], []
@@ -150,7 +177,7 @@ def barcode(result, ax=None, title: str = "Persistence barcode",
         for birth, death in shown:
             finite = np.isfinite(death)
             ax.plot([birth, death if finite else end], [y, y],
-                    color=color, linewidth=2.0, solid_capstyle="butt", zorder=3)
+                    color=color, linewidth=bar_width, solid_capstyle="butt", zorder=3)
             if not finite:
                 ax.plot([end], [y], marker=">", color=color, markersize=5, zorder=3)
             y += 1
@@ -193,6 +220,7 @@ def betti_curves(result, ax=None, title: str = "Betti curves", n_steps: int = 40
     top = _finite_max(diagrams)
     grid = np.linspace(0, top * 1.02 if top > 0 else 1.0, n_steps)
 
+    labels_at = {}  # end value -> labels already placed there
     for d in dims:
         dgm = np.asarray(diagrams.get(d, np.empty((0, 2))), dtype=float).reshape(-1, 2)
         if len(dgm) == 0:
@@ -201,8 +229,11 @@ def betti_curves(result, ax=None, title: str = "Betti curves", n_steps: int = 40
         alive = ((dgm[:, 0][None, :] <= grid[:, None])
                  & (dgm[:, 1][None, :] > grid[:, None])).sum(axis=1)
         ax.plot(grid, alive, color=color, linewidth=2.0, label=f"$b_{d}$", zorder=3)
-        # direct label at the right edge, so identity never rests on colour alone
-        ax.annotate(f"$b_{d}$", xy=(grid[-1], alive[-1]), xytext=(5, 0),
+        # direct label at the right edge, so identity never rests on colour alone;
+        # curves that end at the same value get their labels stacked, not overprinted
+        stacked = labels_at.get(int(alive[-1]), 0)
+        labels_at[int(alive[-1])] = stacked + 1
+        ax.annotate(f"$b_{d}$", xy=(grid[-1], alive[-1]), xytext=(5, 11 * stacked),
                     textcoords="offset points", color=color, fontsize=10,
                     va="center", fontweight="bold")
 
@@ -240,8 +271,43 @@ def plot_points(points: np.ndarray, ax=None, title: str = "Point cloud",
     return ax
 
 
+def _label_vertices(ax, points: np.ndarray, labels: Sequence[str]) -> None:
+    """Put each vertex label just outside the drawing, pushed away from the
+    centroid, so it never sits on an edge running into that vertex."""
+    centre = points.mean(axis=0)
+    for (x, y), text in zip(points, labels):
+        away = np.array([x, y]) - centre
+        norm = np.linalg.norm(away)
+        away = away / norm if norm > 0 else np.array([0.0, 1.0])
+        ax.annotate(text, (x, y), textcoords="offset points", xytext=tuple(11 * away),
+                    ha="center", va="center", fontsize=11, color=INK, zorder=4)
+    ax.margins(0.12)
+
+
+def _picture_axes(ax, title: str) -> None:
+    """A drawing, not a chart: no ticks, no grid, no axis lines."""
+    ax.set_aspect("equal")
+    ax.set_xticks([])
+    ax.set_yticks([])
+    if title:
+        ax.set_title(title, color=INK, fontsize=11, loc="left", pad=8)
+    _style_axes(ax)
+    ax.grid(False)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+
+
+def _fraction(value: float) -> str:
+    """1, 2/3, 1/3 rather than 1.000, 0.667, 0.333 -- harmonic weights on small
+    complexes are usually simple fractions, and the slide states them that way."""
+    from fractions import Fraction
+    exact = Fraction(value).limit_denominator(12)
+    return str(exact) if abs(float(exact) - value) < 1e-6 else f"{value:.2f}"
+
+
 def plot_complex(points: np.ndarray, complex_, ax=None, title: str = "",
-                 vertex_size: float = 30, show_counts: bool = True):
+                 vertex_size: float = 30, show_counts: bool = True,
+                 vertex_labels: Sequence[str] | None = None):
     """Draw a 2D simplicial complex: vertices, edges, and shaded triangles.
 
     ``points`` supplies the coordinates of vertex ``i`` in row ``i``; the complex
@@ -269,24 +335,23 @@ def plot_complex(points: np.ndarray, complex_, ax=None, title: str = "",
         ax.set_xlabel(f"{caption}\n$\\beta$ = ({betti})",
                       color=INK_SECONDARY, fontsize=9)
 
-    ax.set_aspect("equal")
-    ax.set_xticks([])
-    ax.set_yticks([])
-    if title:
-        ax.set_title(title, color=INK, fontsize=11, loc="left", pad=8)
-    _style_axes(ax)
-    ax.grid(False)
+    if vertex_labels is not None:
+        _label_vertices(ax, points, vertex_labels)
+    _picture_axes(ax, title)
     return ax
 
 
 def plot_chain(points: np.ndarray, complex_, chain: np.ndarray, ax=None,
-               title: str = "", scale: float = 1.0):
+               title: str = "", scale: float = 1.0,
+               vertex_labels: Sequence[str] | None = None, show_weights: bool = False):
     """Draw a 1-chain as a flow on the edges: an arrow per edge, pointing along
     the orientation when the coefficient is positive and against it when it is
     negative, with width proportional to magnitude.
 
     This is how a harmonic representative is meant to be read -- a circulation
-    around the hole, not a set of edges.
+    around the hole, not a set of edges.  ``show_weights`` prints each edge's
+    magnitude relative to the largest, so a split such as 2/3 against 1/3 can be
+    read off rather than guessed from arrow widths.
     """
     points = np.asarray(points, dtype=float)
     chain = np.asarray(chain, dtype=float).ravel()
@@ -314,16 +379,22 @@ def plot_chain(points: np.ndarray, complex_, chain: np.ndarray, ax=None,
                                     linewidth=0.6 + 3.0 * magnitude * scale,
                                     alpha=0.35 + 0.65 * magnitude,
                                     shrinkA=4, shrinkB=6))
+        if show_weights:
+            # beside the edge's midpoint, on the side away from the centroid
+            mid = (start + end) / 2
+            normal = np.array([-(end - start)[1], (end - start)[0]])
+            normal = normal / (np.linalg.norm(normal) or 1.0)
+            if normal @ (mid - points.mean(axis=0)) < 0:
+                normal = -normal
+            ax.annotate(_fraction(magnitude), mid, textcoords="offset points",
+                        xytext=tuple(10 * normal), ha="center", va="center",
+                        fontsize=10, color=DIM_COLORS[1], fontweight="bold", zorder=4)
     ax.scatter(points[:, 0], points[:, 1], s=26, color=INK,
                edgecolor=SURFACE, linewidth=0.8, zorder=3)
 
-    ax.set_aspect("equal")
-    ax.set_xticks([])
-    ax.set_yticks([])
-    if title:
-        ax.set_title(title, color=INK, fontsize=11, loc="left", pad=8)
-    _style_axes(ax)
-    ax.grid(False)
+    if vertex_labels is not None:
+        _label_vertices(ax, points, vertex_labels)
+    _picture_axes(ax, title)
     return ax
 
 

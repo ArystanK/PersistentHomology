@@ -1,7 +1,7 @@
 \beamer@sectionintoc {1}{Motivation}{3}{0}{1}
-\beamer@sectionintoc {2}{From points to complexes}{12}{0}{2}
-\beamer@sectionintoc {3}{Homology}{32}{0}{3}
-\beamer@sectionintoc {4}{4. Persistence \textnormal {\small (18 min)}}{53}{0}{4}
-\beamer@sectionintoc {5}{5. Demo: TDA in an AI pipeline \textnormal {\small (13 min)}}{68}{0}{5}
-\beamer@sectionintoc {6}{6. The Hodge Laplacian \textnormal {\small (18 min)}}{77}{0}{6}
-\beamer@sectionintoc {7}{Wrap-up \& exercise \textnormal {\small (8 min)}}{89}{0}{7}
+\beamer@sectionintoc {2}{From points to complexes}{8}{0}{2}
+\beamer@sectionintoc {3}{Homology}{27}{0}{3}
+\beamer@sectionintoc {4}{4. Persistence}{39}{0}{4}
+\beamer@sectionintoc {5}{Demo: TDA in an AI pipeline}{54}{0}{5}
+\beamer@sectionintoc {6}{The Hodge Laplacian}{60}{0}{6}
+\beamer@sectionintoc {7}{Wrap-up \& exercise}{67}{0}{7}

@@ -207,7 +207,8 @@ def main() -> None:
         [0.0, 0.0], [0.8, -0.9], [1.6, 0.0], [0.8, 1.2],  # a, b, c, then d on top
     ])
     viz.plot_chain(bridged_points, bridged, bridged.harmonic_basis(1)[:, 0], axes[1],
-                   title="two routes home: unequal weights")
+                   title="two routes home: unequal weights",
+                   vertex_labels=list("abcd"), show_weights=True)
 
     ax = axes[2]
     sizes = [3, 6, 12, 24, 48]

@@ -217,10 +217,11 @@
         \small
         Relabel the axes as two coordinates of an embedding, and this is a t-SNE or UMAP plot you have looked at yourself.
         Same mean, near-identical covariance.
-        \alert{PCA cannot distinguish (a) from (b).} A clustering algorithm sees (c) and
-        reports ``one cluster'' for both (a) and (b).
+        \alert{PCA cannot distinguish (a) from (b).} Let $k$-means pick $k$ by silhouette
+        and it answers $k=3$ for all three --- cutting the loop, one connected piece,
+        into three arcs.
 
-        \pause
+
         \vspace{0.3em}
         \begin{center}
             \alert{Nothing in the standard toolbox has a slot for ``there is a hole in the middle''.}
@@ -243,7 +244,7 @@
             three-way interaction) --- exactly what simplicial complexes encode, and the
             reason \emph{topological deep learning} is now an active subfield.
         \end{itemize}
-        \pause
+
         \vspace{0.2em}
         \begin{center}
             None of this is a linear subspace and none of it is a set of separated clusters.
@@ -305,7 +306,7 @@
             \end{column}
         \end{columns}
 
-        \pause
+
         \vspace{0.3em}
         \centering\small PCA and clustering miss \alert{$\beta_1$} entirely. Part 3 computes these
         numbers as ranks of matrices; Part 4 makes them survive noise.
@@ -347,7 +348,7 @@
         \end{columns}
 
         \vspace{0.4em}
-        \pause
+
         \begin{alertblock}{The one honest simplification}
             We work over the field $\R$ (occasionally $\bF_2$, where all signs vanish).
             Over a field every module is free, so homology is just a vector space and $\beta_k$ is its dimension.
@@ -704,8 +705,8 @@
                 \vspace{0.4em}
                 \footnotesize\raggedright
                 \alert{$\beta_0$ counts connected components.} Clustering is finding
-                them, and $H_0$ persistence turns out to be single-linkage clustering
-                (Part 4).
+                them, and tracking components across scales (persistence in dimension
+                $0$) turns out to be single-linkage clustering (Part 4).
             \end{column}
         \end{columns}
     \end{frame}
@@ -786,6 +787,57 @@
 
         \vspace{0.5em}
         \alert{The open balls of the metric generate a topology on $X$.}
+    \end{frame}
+
+%----------------------------------------------------------------------
+    \begin{frame}[shrink=10]{Hausdorff distance: how far apart two point clouds are}
+        \begin{block}{Hausdorff distance}
+            For finite $X,Y$ in a metric space,
+            \[
+                \dH(X,Y)\;=\;\max\Bigl\{\ \max_{x\in X}\ \min_{y\in Y} d(x,y),\ \
+                \max_{y\in Y}\ \min_{x\in X} d(x,y)\ \Bigr\}.
+            \]
+            Equivalently: the smallest $r$ such that every point of $X$ is within $r$ of
+            some point of $Y$, \emph{and} every point of $Y$ is within $r$ of some point
+            of $X$.
+        \end{block}
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.52\textwidth}
+                \centering
+                \begin{tikzpicture}[scale=0.8]
+                    % (a) one point of the hexagon moved outwards (drawn larger than 0.1)
+                    \foreach \a in {60,120,180,240,300}{\fill (\a:1) circle (2.2pt);}
+                    \draw[gray] (0:1) circle (2.2pt);
+                    \fill[orange!85!black] (0:1.4) circle (2.2pt);
+                    \draw[->,orange!85!black,shorten <=3pt,shorten >=3pt] (0:1) -- (0:1.4);
+                    \node[align=center] at (0.2,-1.55)
+                        {\scriptsize (a) one point moved by $0.1$\\[-1pt]
+                         \scriptsize $\dH=0.1$ \ (move drawn larger)};
+                    % (b) the hexagon plus one outlier
+                    \begin{scope}[shift={(3.9,0)}]
+                        \foreach \a in {0,60,...,300}{\fill (\a:1) circle (2.2pt);}
+                        \fill[orange!85!black] (2.5,0) circle (2.2pt);
+                        \draw[<->,orange!85!black,shorten <=3pt,shorten >=3pt] (1,0) -- (2.5,0)
+                            node[midway,above] {\scriptsize $1.5$};
+                        \node[align=center] at (0.75,-1.55)
+                            {\scriptsize (b) one outlier added\\[-1pt] \scriptsize $\dH=1.5$};
+                    \end{scope}
+                \end{tikzpicture}
+            \end{column}
+            \begin{column}{0.46\textwidth}
+                \small
+                \textbf{Computing it.} Form the $|X|\times|Y|$ distance matrix. Take each
+                row's minimum and the largest of those; the same for columns; then the
+                larger of the two.
+
+                \vspace{0.3em}
+                \textbf{Both directions matter.} In (b) every point of $X$ is in $Y$, so
+                the first term is $0$; the outlier alone makes the second term $1.5$.
+
+                \vspace{0.3em}
+                Part 4 uses $\dH$ to measure how much the \emph{data} moved.
+            \end{column}
+        \end{columns}
     \end{frame}
 
 %----------------------------------------------------------------------
@@ -895,15 +947,16 @@
     \begin{frame}{The Vietoris--Rips complex, as $\varepsilon$ grows}
         \begin{center}
             \IfFileExists{output/rips_hexagon_frames/frame-000.png}
-            {\animategraphics[width=\textwidth,height=0.56\textheight,keepaspectratio,
+            {\animategraphics[width=\textwidth,height=0.52\textheight,keepaspectratio,
                 controls,loop,autoplay,poster=50]{15}{output/rips_hexagon_frames/frame-}{000}{089}}
             {\figmissing{rips_hexagon_frames/frame-000}}
         \end{center}
         \vspace{-0.3em}
         {\footnotesize The three pictures from the previous slide, as one sweep of
-            $\varepsilon$ from $0$ to $2.2$. Right: the barcode. The bars under the moving
-        line are the classes alive at that scale: count them to get $\beta_0$ and
-            $\beta_1$ of the complex on the left.\par}
+            $\varepsilon$ from $0$ to $2.2$. Right: the barcode, one bar per feature ---
+            the $H_0$ row tracks components, the $H_1$ row loops. The bars under the
+            moving line are the features alive at that scale: count them to get
+            $\beta_0$ and $\beta_1$ of the complex on the left.\par}
         \vspace{0.2em}
         \figcredit{rips\_animation.py}
     \end{frame}
@@ -937,7 +990,7 @@
             useless once $d$ is the size of an embedding.
         \end{block}
         \vspace{0.3em}
-        \pause
+
         \begin{center}
             \alert{Rips is the default in high dimension because it needs nothing but the
             distance matrix} --- the same reason $k$-NN graphs are cheap and Voronoi diagrams
@@ -966,7 +1019,7 @@
         \end{itemize}
 
         \vspace{0.7em}
-        \pause
+
         There is no principled choice, and any single choice is fragile: one outlier moves it
         --- the same fragility that makes a single choice of $k$ or $\varepsilon$ for a
         neighbourhood graph feel arbitrary.
@@ -1091,7 +1144,7 @@
             \end{column}
         \end{columns}
         \vspace{0.5em}
-        \pause
+
         \begin{center}
             Two matrices. Everything else in this part is what you can read off them.
         \end{center}
@@ -1122,7 +1175,7 @@
             \end{pmatrix}.
         \]
 
-        \pause
+
         \vspace{0.3em}
         \textbf{Why in general.} Deleting two vertices $v_i,v_j$ from $\sigma$ can be done in
         two orders, and the two resulting signs are opposite. Every codimension-$2$ face is
@@ -1156,7 +1209,7 @@
         \end{itemize}
 
         \vspace{0.5em}
-        \pause
+
         \begin{alertblock}{Rank--nullity, and we are done}
             \[
                 \beta_k \;=\;\dim Z_k-\dim B_k
@@ -1200,10 +1253,10 @@
                 spanned by $z=e_1+e_2-e_3$ --- go $a\to b\to c$, come back along $ac$.
 
                 \vspace{0.5em}
-                \pause
+
                 \emph{Hollow:} no triangles, so $\partial_2=0$, $\rank\partial_2=0$:
                 \[ \beta_1 = 1-0 = \boxed{1}. \]
-                \pause
+
                 \emph{Filled:} $\partial_2 t=e_1+e_2-e_3=z$, so $\rank\partial_2=1$:
                 \[ \beta_1 = 1-1 = \boxed{0}. \]
                 The one cycle now bounds. The hole is gone.
@@ -1257,7 +1310,7 @@
         \end{columns}
 
         \vspace{0.5em}
-        \pause
+
         The single element of $\ker\partial_2$ is the sum of all four triangles with signs ---
         the closed surface itself. \alert{It is a cycle that bounds nothing, because we never
         put in the solid tetrahedron.} Add the solid and $\beta_2$ drops to $0$: this is the
@@ -1283,7 +1336,7 @@
         \end{block}
 
         \vspace{0.2em}
-        \pause
+
         \textbf{Reference values.} circle $(1,1,0)$; sphere $S^2$ $(1,0,1)$;
         torus $(1,2,1)$; disk $(1,0,0)$.
     \end{frame}
@@ -1318,7 +1371,7 @@
         \end{columns}
 
         \vspace{0.7em}
-        \pause
+
         \begin{alertblock}{Part 3 in one line}
             \[
                 \beta_k=\nullity\partial_k-\rank\partial_{k+1}.
@@ -1327,17 +1380,10 @@
         \end{alertblock}
     \end{frame}
 
-%======================================================================
-    \begin{frame}[standout]
-  Break --- 5 minutes\\[0.5em]
-  {\normalsize\normalfont Halfway: you now know what a Betti number is.\\
-  The rest is doing it at every scale, and doing it with eigenvalues.}
-    \end{frame}
-
-%======================================================================
 
 
-    \section{4. Persistence \textnormal{\small(18 min)}}
+
+    \section{4. Persistence}
 
     \begin{frame}[shrink=5]{Sweep $\varepsilon$ instead of choosing it}
         As $\varepsilon$ grows, simplices are only ever \emph{added}:
@@ -1349,7 +1395,7 @@
         like building a minimum spanning tree by adding edges in increasing weight order.
 
         \vspace{0.7em}
-        \pause
+
         Each insertion does exactly one of two things to homology:
         \begin{itemize}
             \item it \HL{creates} a new cycle --- a feature is \alert{born}; or
@@ -1361,7 +1407,7 @@
         answer, and it required no choice of $\varepsilon$.
 
         \vspace{0.5em}
-        \pause
+
         \textbf{Elder rule.} When two features merge, the older one survives and the younger
         one dies. This makes the pairing well defined.
     \end{frame}
@@ -1369,10 +1415,16 @@
 %----------------------------------------------------------------------
     \begin{frame}{Barcodes and diagrams}
         \begin{columns}[T,onlytextwidth]
-            \begin{column}{0.48\textwidth}
+            \begin{column}{0.58\textwidth}
                 \small
+                \textbf{Which features?} The classes of $H_k=Z_k/B_k$ from Part 3:
+                $H_0$ = components, $H_1$ = loops, $H_2$ = voids. An ``$H_k$ bar'' is one
+                $k$-dimensional hole, and at any $\varepsilon$ the number of $H_k$ bars
+                alive is $\beta_k$.
+
+                \vspace{0.5em}
                 \textbf{Barcode}: draw each feature as a horizontal bar from its birth to its death,
-                grouped by dimension.
+                grouped by dimension $k$.
 
                 \vspace{0.5em}
                 \textbf{Persistence diagram}: plot each feature as the point
@@ -1385,14 +1437,14 @@
                 \alert{Heuristic:} long bars are features of the underlying shape, short bars are
                 sampling noise. The stability slide says why you are allowed to believe this.
             \end{column}
-            \begin{column}{0.5\textwidth}
+            \begin{column}{0.4\textwidth}
                 \centering
-                \begin{tikzpicture}[scale=1.1]
+                \begin{tikzpicture}[scale=1.0]
   \draw[->] (0,0)--(2.6,0) node[right] {\scriptsize birth};
   \draw[->] (0,0)--(0,2.6) node[above] {\scriptsize death};
   \draw[dashed,gray] (0,0)--(2.4,2.4);
   \fill[red!80!black] (1,1.73) circle (2.2pt);
-  \node[red!80!black,left] at (0.92,1.78) {\scriptsize $H_1$};
+  \node[red!80!black,above] at (1,1.8) {\scriptsize $H_1$: a loop};
   \fill[gray] (0.6,0.72) circle (1.6pt);
   \fill[gray] (1.3,1.42) circle (1.6pt);
   \fill[gray] (0.35,0.5) circle (1.6pt);
@@ -1419,8 +1471,9 @@
                     \midrule
                     $0$           & $6$ components born                \\
                     $1$           & $5$ components die; \HL{loop born} \\
-                    $\sqrt3$      & triangles fill; \HL{loop dies}     \\
-                    $2$           & one big simplex                    \\
+                    $\sqrt3$      & triangles fill; \HL{loop dies};   \\
+                                  & a void is born (Rips artifact)     \\
+                    $2$           & one big simplex; the void dies     \\
                     \bottomrule
                 \end{tabular}
 
@@ -1431,21 +1484,24 @@
                 \centering
                 \begin{tikzpicture}[xscale=1.75,yscale=0.9]
   \draw[->] (0,-0.2)--(2.5,-0.2) node[right] {\scriptsize $\varepsilon$};
-  \foreach \x in {0,1,2}{\draw (\x,-0.15)--(\x,-0.25) node[below] {\scriptsize \x};}
-  \draw (1.732,-0.15)--(1.732,-0.25);
-  \node[below,yshift=-7pt] at (1.732,-0.25) {\scriptsize $\sqrt3$};
+  \foreach \x/\lab in {0/0,1/1,1.732/\sqrt3,2/2}{
+    \draw (\x,-0.15)--(\x,-0.25) node[below,text height=1.6ex] {\scriptsize $\lab$};}
   \node[left] at (-0.05,1.85) {\scriptsize $H_0$};
   \foreach \y in {1.55,1.75,1.95,2.15,2.35}{\draw[very thick,black!70] (0,\y)--(1,\y);}
   \draw[very thick,black] (0,1.35)--(2.45,1.35);
   \node[right] at (2.45,1.35) {\scriptsize $\infty$};
   \node[left] at (-0.05,0.85) {\scriptsize $H_1$};
   \draw[very thick,red!80!black] (1,0.85)--(1.732,0.85);
+  % the octahedron-boundary void: real in the complex, not in the data (slide 41)
+  \node[left] at (-0.05,0.35) {\scriptsize $H_2$};
+  \draw[very thick,green!50!black,dashed] (1.732,0.35)--(2,0.35);
+  \node[right,green!50!black] at (2.02,0.35) {\tiny artifact};
                 \end{tikzpicture}
             \end{column}
         \end{columns}
 
         \vspace{0.4em}
-        \pause
+
         \begin{block}{You already know the $H_0$ half of this}
             The $H_0$ death times are exactly the merge heights of the \alert{single-linkage
             dendrogram}, i.e.\ the edge weights of a minimum spanning tree. Persistent homology
@@ -1457,14 +1513,208 @@
 %----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{The hexagon, actually computed}
-        \computedfig[0.54]{talk_04_persistence}{%
+        \computedfig[0.51]{talk_04_persistence}{%
             The cloud, its barcode and its diagram. One $H_1$ bar, $[1,\sqrt3)$, and it is
             the only thing in the picture that is long. The script also checks the claim
             on the previous slide outright: the $H_0$ death times agree with the
             minimum-spanning-tree edge weights \emph{to machine precision} on a
-            $60$-point cloud.}{talk\_04\_persistence.py}
+            $60$-point cloud. The next slide reads off every number.}{talk\_04\_persistence.py}
     \end{frame}
     \fi
+
+%----------------------------------------------------------------------
+    \ifcomputedslides
+    \begin{frame}[shrink=8]{The hexagon's diagram, number by number}
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.53\textwidth}
+                \small
+                {\footnotesize
+                \begin{tabular}{@{}lll@{}}
+                    \toprule
+                    $\varepsilon$ & added & bars \\
+                    \midrule
+                    $0$ & $6$ vertices & $6\times H_0$ start \\
+                    $1$ & $6$ sides & $5\times H_0$ end; $H_1$ starts \\
+                    $\sqrt3$ & $6$ diagonals, $8$ triangles & $H_1$ ends; $H_2$ starts \\
+                    $2$ & the rest & $H_2$ ends \\
+                    \bottomrule
+                \end{tabular}\par}
+
+                \vspace{0.6em}
+                Each bar $[b,d)$ becomes the point $(b,d)$ on the diagram:
+                \begin{itemize}
+                    \item $[0,1)$ five times $\to$ $(0,1)$, marked $\times5$;
+                    \item $[0,\infty)$ $\to$ $(0,\infty)$, on the dashed line;
+                    \item $[1,\sqrt3)$ $\to$ $(1,1.73)$: persistence $0.73$, \HL{the loop};
+                    \item $[\sqrt3,2)$ $\to$ $(1.73,2)$: persistence $0.27$, the Rips artifact.
+                \end{itemize}
+            \end{column}
+            \begin{column}{0.45\textwidth}
+                \small
+                \begin{block}{Six sides: five deaths and one birth}
+                    Add the sides one at a time. Each of the first five joins two
+                    different components: one $H_0$ bar ends. The sixth joins two vertices
+                    that are \emph{already} connected, so it merges nothing and closes a
+                    cycle instead: the $H_1$ bar starts.
+                \end{block}
+                \begin{alertblock}{Why one $H_0$ bar never ends}
+                    Six components merging into one is $5$ deaths, not $6$. What is left is
+                    the whole connected complex, and adding simplices can join components
+                    but never remove the last one: $\beta_0\ge1$ forever. Which bar
+                    survives is the elder rule; all were born at $0$, so the tie goes to
+                    the vertex inserted first.
+                \end{alertblock}
+            \end{column}
+        \end{columns}
+    \end{frame}
+    \fi
+
+%----------------------------------------------------------------------
+    \begin{frame}[shrink=5]{Distance between diagrams: the bottleneck distance}
+        \begin{block}{Bottleneck distance $\dB(D,D')$}
+            Match the points of $D$ with the points of $D'$ one to one, where any point may
+            instead be matched to the diagonal (declared noise).
+            \begin{itemize}
+                \item Pair $(b,d)\leftrightarrow(b',d')$ costs
+                $\max\bigl(|b-b'|,\,|d-d'|\bigr)$.
+                \item Sending $(b,d)$ to the diagonal costs $(d-b)/2$, half its persistence.
+            \end{itemize}
+            $\dB$ is the smallest possible value of the \emph{largest} cost in a matching.
+        \end{block}
+        \small
+        \textbf{Worked example.} $D=\{(1,1.73)\}$, the hexagon's loop;
+        $D'=\{(1.1,1.65),\ (0.6,0.7)\}$.
+        \begin{center}
+            \footnotesize
+            \begin{tabular}{@{}lll@{}}
+                \toprule
+                matching & costs & largest \\
+                \midrule
+                loop $\leftrightarrow(1.1,1.65)$, \ $(0.6,0.7)\to$ diagonal
+                    & $0.1$, \ $0.05$ & \HL{$0.1$} \\
+                everything to the diagonal & $0.37$, \ $0.28$, \ $0.05$ & $0.37$ \\
+                loop $\leftrightarrow(0.6,0.7)$, \ $(1.1,1.65)\to$ diagonal
+                    & $1.03$, \ $0.28$ & $1.03$ \\
+                \bottomrule
+            \end{tabular}
+        \end{center}
+        So $\dB(D,D')=0.1$: the loop moved by $0.1$, and the new point is noise.
+        In general this is a bipartite matching problem (binary-search the threshold, test
+        for a perfect matching). \textbf{Wasserstein} sums the costs instead:
+        $W_2=\sqrt{0.1^2+0.05^2}\approx0.11$.
+
+        \vspace{0.3em}
+        \pause
+        \centering Move one hexagon point $0.1$ outwards: $\dH=0.1$, the loop's bar
+        becomes $[1.054,\sqrt3)$, and $\dB=0.054\le2\cdot0.1$. That inequality is the stability theorem, two slides on.
+    \end{frame}
+
+%----------------------------------------------------------------------
+    \begin{frame}[shrink=5]{Bottleneck distance, precisely}
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.55\textwidth}
+                \small
+                \begin{block}{Definition}
+                    Add the diagonal $\Delta=\{(t,t)\}$ to both diagrams, every point of it
+                    available as often as needed. Then
+                    \[
+                        \dB(D,D')=\min_{\gamma}\ \max_{p}\ \|p-\gamma(p)\|_\infty ,
+                    \]
+                    over bijections $\gamma: D\cup\Delta\to D'\cup\Delta$.
+                \end{block}
+                \textbf{Why the diagonal.} Two diagrams rarely have the same number of
+                points, and noise appears and disappears right next to the diagonal. A
+                point with nothing to match is deleted by moving it there.
+
+                \vspace{0.3em}
+                \textbf{Why $\|\cdot\|_\infty$ and $(d-b)/2$.} Moving birth \emph{and}
+                death by at most $\delta$ is a $\delta$-perturbation. The nearest diagonal
+                point to $(b,d)$ is $\bigl(\tfrac{b+d}2,\tfrac{b+d}2\bigr)$, and both
+                coordinates move by $\tfrac{d-b}2$.
+            \end{column}
+            \begin{column}{0.43\textwidth}
+                \centering
+                \begin{tikzpicture}[scale=2.3]
+                    \draw[->,gray] (0.3,0.3) -- (1.62,0.3) node[right] {\scriptsize birth};
+                    \draw[->,gray] (0.3,0.3) -- (0.3,1.95) node[left] {\scriptsize death};
+                    \draw[gray,dashed] (0.3,0.3) -- (1.55,1.55);
+                    \foreach \t in {0.5,1,1.5}{
+                        \draw[gray] (\t,0.32)--(\t,0.28) node[below] {\tiny\t};}
+                    \foreach \t in {0.5,1,1.5}{
+                        \draw[gray] (0.32,\t)--(0.28,\t) node[left] {\tiny\t};}
+                    % the L-infinity ball of radius 0.1 around the loop: D' lands inside it
+                    \draw[red!70!black,dashed] (0.9,1.632) rectangle (1.1,1.832);
+                    \fill[blue!70!black] (1,1.732) circle (0.9pt);
+                    \node[blue!70!black,left] at (0.9,1.78) {\scriptsize loop $(1,1.73)$};
+                    \fill[orange!85!black] (1.1,1.65) circle (0.9pt);
+                    \node[orange!85!black,right] at (1.12,1.62) {\scriptsize $(1.1,1.65)$};
+                    \draw[->,red!70!black] (1.01,1.722) -- (1.085,1.66);
+                    \node[red!70!black,right] at (1.1,1.86) {\tiny box of radius $0.1$};
+                    % the noise point, deleted onto the diagonal
+                    \fill[orange!85!black] (0.6,0.7) circle (0.9pt);
+                    \fill[red!70!black] (0.65,0.65) circle (0.6pt);
+                    \draw[red!70!black] (0.6,0.7) -- (0.65,0.65);
+                    \node[orange!85!black,left] at (0.58,0.72) {\scriptsize $(0.6,0.7)$};
+                    \node[red!70!black,right] at (0.68,0.6) {\tiny to the diagonal: $0.05$};
+                \end{tikzpicture}
+
+                \vspace{0.3em}
+                \footnotesize\raggedright
+                The best matching from the last slide: the moved point lies in the loop's
+                $\|\cdot\|_\infty$-box of radius $0.1$, and the point near the diagonal is
+                deleted for $0.05$. $\dB=0.1$.
+            \end{column}
+        \end{columns}
+        \vspace{0.4em}
+        \small
+        \textbf{Points at infinity} (the $H_0$ bar that never dies) are matched only with
+        each other, by birth: $[0,\infty)$ vs $[0.2,\infty)$ costs $0.2$. If the two
+        diagrams have different numbers of them, $\dB=\infty$.
+        \alert{Only the worst pair counts}: $\dB$ ignores many small changes; Wasserstein
+        adds them up.
+    \end{frame}
+
+%----------------------------------------------------------------------
+    \begin{frame}[shrink=5]{Computing the bottleneck distance}
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.5\textwidth}
+                \small
+                \textbf{1. Make it square.} Rows: the points of $D$, plus one diagonal slot
+                per point of $D'$. Columns: the points of $D'$, plus one diagonal slot per
+                point of $D$. A point may only go to \emph{its own} slot; slot to slot is
+                free.
+                \begin{center}
+                    \footnotesize
+                    \begin{tabular}{@{}l|ccc@{}}
+                        & $(1.1,1.65)$ & $(0.6,0.7)$ & $\Delta_{\text{loop}}$ \\
+                        \hline
+                        loop $(1,1.73)$ & \HL{$0.1$} & $1.03$ & $0.37$ \\
+                        $\Delta_{(1.1,1.65)}$ & $0.28$ & $\infty$ & \HL{$0$} \\
+                        $\Delta_{(0.6,0.7)}$ & $\infty$ & \HL{$0.05$} & $0$ \\
+                    \end{tabular}
+                \end{center}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \small
+                \textbf{2. Search the threshold.} The answer is one of the entries:
+                $0,\ 0.05,\ 0.1,\ 0.28,\ 0.37,\ 1.03$. For a candidate $r$, keep the
+                entries $\le r$ and ask: is there a perfect matching?
+                \begin{itemize}
+                    \item $r=0.05$: no --- the loop's row has nothing $\le0.05$.
+                    \item $r=0.1$: yes --- the highlighted cells.
+                \end{itemize}
+                So $\dB=0.1$. Binary search over the sorted entries; each test is a
+                bipartite matching (Hopcroft--Karp).
+            \end{column}
+        \end{columns}
+        \vspace{0.5em}
+        \small
+        \textbf{3. Cost.} $n$ points give $O(n^2)$ candidates, so $O(\log n)$ matching tests,
+        each $O(n^{2.5})$. Geometric tricks (Kerber--Morozov--Nigmetov 2017) make it fast for
+        thousands of points: \texttt{persim}, \texttt{GUDHI}, \texttt{hera}.
+        \alert{Wasserstein} swaps ``smallest largest cost'' for ``smallest total cost'': the
+        same matrix, solved by the Hungarian algorithm.
+    \end{frame}
 
 %----------------------------------------------------------------------
     \begin{frame}[shrink=8]{Stability: why anyone trusts this}
@@ -1474,17 +1724,21 @@
 
         \vspace{0.4em}
         \small
-        Precisely: measure the distance between two diagrams by the best matching of their
-        points (allowing a point to be matched to the diagonal, i.e.\ declared noise), and
-        call it $\dB$. Then for point clouds $X,Y$,
+        Precisely: with $\dB$ the bottleneck distance (slides 40--42) and $\dH$ the
+        Hausdorff distance (Part 2), for point clouds $X,Y$,
         \[
             \dB\bigl(\Dgm_k(X),\Dgm_k(Y)\bigr)\ \le\ 2\,\dH(X,Y),
         \]
-        where $\dH$ is Hausdorff distance. \HL{The diagram is a $1$-Lipschitz function of
-        the data.} \emph{(Cohen-Steiner--Edelsbrunner--Harer 2007; Chazal et al.)}
+        \HL{The diagram is a Lipschitz function of the data}, with constant $2$. \emph{(Cohen-Steiner--Edelsbrunner--Harer 2007; Chazal et al.)}
 
-        \vspace{0.6em}
-        \pause
+        \begin{block}{Lipschitz function}
+            A map $f:(A,d)\to(A',d')$ between metric spaces is \emph{$K$-Lipschitz} if
+            $d'\bigl(f(a),f(b)\bigr)\le K\,d(a,b)$ for all $a,b$: it never stretches a
+            distance by more than a factor $K$. \ $x\mapsto2x$ is $2$-Lipschitz, $\sin$ is
+            $1$-Lipschitz, $x\mapsto x^2$ on $\R$ is not Lipschitz (ever steeper).
+            Here $f=\Dgm_k$, $d=\dH$, $d'=\dB$, $K=2$.
+        \end{block}
+
         Three consequences worth stating out loud:
         \begin{itemize}
             \small
@@ -1532,7 +1786,7 @@
         \end{itemize}
 
         \vspace{0.4em}
-        \pause
+
         It is left-to-right Gaussian elimination that never permutes columns.
         Worst case $O(m^3)$; in practice near-linear, thanks to clearing, cohomology
         duality, and never storing $D$ (Ripser).
@@ -1569,17 +1823,19 @@
         \computedfigside[0.62]{talk_01_motivation}{%
             Mean $0$ for all three, and covariances agreeing to within sampling error, so
             PCA splits the variance $0.55/0.45$, $0.53/0.47$, $0.56/0.44$ --- nothing to
-            choose between them. A $k$-means silhouette then picks $k=3$ for the
-            \emph{loop}, which has one connected component. The diagrams settle it: for
-            (b) the longest $H_1$ bar is $73\times$ the runner-up, for (c) the longest
-            $H_0$ bar does the same, and for (a) neither fires.}{talk\_01\_motivation.py}
+            choose between them. A $k$-means silhouette then picks $k=3$ for all
+            three, cutting the \emph{loop}, one connected piece, into three arcs. The diagrams settle it,
+            scoring each by its longest bar over the runner-up: for (b) the longest
+            $H_1$ bar is $73\times$ the next, for (c) the longest $H_0$ bar is
+            $2.2\times$ --- clear, but a far smaller margin --- and (a) reaches neither
+            ($1.4\times$ in $H_0$, $1.2\times$ in $H_1$).}{talk\_01\_motivation.py}
     \end{frame}
     \fi
 
 %======================================================================
 
 
-    \section{5. Demo: TDA in an AI pipeline \textnormal{\small(13 min)}}
+    \section{Demo: TDA in an AI pipeline}
 
     \begin{frame}{The problem with feeding this to a model}
         A persistence diagram is a \emph{multiset} of points of varying cardinality.
@@ -1592,7 +1848,7 @@
         \end{itemize}
 
         \vspace{0.6em}
-        \pause
+
         \begin{alertblock}{Consequence}
             You cannot hand a diagram to a linear layer, an SVM, or a transformer. You must
             \HL{vectorise} it first --- ideally with a map that is Lipschitz in $\dB$, so the
@@ -1639,16 +1895,16 @@
         \begin{center}
             \resizebox{0.98\textwidth}{!}{%
                 \begin{tikzpicture}[
-                    node distance=0.45cm and 0.42cm,
-                    box/.style={draw,rounded corners=2pt,align=center,inner sep=4pt,
-                    minimum height=1.0cm,text width=2.05cm,font=\scriptsize,fill=blue!8},
+                    node distance=0.45cm and 0.3cm,
+                    box/.style={draw,rounded corners=2pt,align=center,inner sep=3pt,
+                    minimum height=1.6cm,text width=1.95cm,font=\footnotesize,fill=blue!8},
                     arr/.style={-{Stealth[length=2mm]},thick}]
-\node[box] (a) {raw data\\{\tiny points / embeddings / graphs}};
-\node[box,right=of a] (b) {metric\\or filtration\\{\tiny \alert{modelling step}}};
-\node[box,right=of b] (c) {filtered\\complex\\{\tiny Rips / alpha / cubical}};
-\node[box,right=of c] (d) {persistence\\diagrams\\{\tiny $H_0,H_1,H_2$}};
-\node[box,right=of d] (e) {vectorisation\\{\tiny landscape / image}};
-\node[box,right=of e] (f) {model\\{\tiny SVM / RF / NN}};
+\node[box] (a) {raw data\\{\scriptsize\color{black!65} points,\\embeddings,\\graphs}};
+\node[box,right=of a] (b) {metric\\or filtration\\{\scriptsize \alert{modelling step}}};
+\node[box,right=of b] (c) {filtered\\complex\\{\scriptsize\color{black!65} Rips, alpha,\\cubical}};
+\node[box,right=of c] (d) {persistence\\diagrams\\{\scriptsize\color{black!65} $H_0,H_1,H_2$}};
+\node[box,right=of d] (e) {vectorisation\\{\scriptsize\color{black!65} landscape, image}};
+\node[box,right=of e] (f) {model\\{\scriptsize\color{black!65} SVM, RF, NN}};
 \foreach \x/\y in {a/b,b/c,c/d,d/e,e/f}{\draw[arr] (\x)--(\y);}
                 \end{tikzpicture}}
         \end{center}
@@ -1661,33 +1917,6 @@
             \item Cross-validate honestly: the diagram computation must sit \emph{inside}
             the CV loop if any preprocessing is data-dependent.
         \end{itemize}
-    \end{frame}
-
-%----------------------------------------------------------------------
-    \begin{frame}[fragile]{Four lines, on your own embeddings}
-        \begin{lstlisting}
-import numpy as np
-from ripser import ripser
-from persim import plot_diagrams
-
-X = model.encode(texts)                # or any embedding / hidden state
-dgms = ripser(X, maxdim=1, thresh=2.0)["dgms"]
-plot_diagrams(dgms, show=True)
-
-h1 = dgms[1]
-order = np.argsort(-(h1[:, 1] - h1[:, 0]))
-print(h1[order][:5])                    # five longest-lived loops
-        \end{lstlisting}
-        \vspace{0.4em}
-        \small
-        \alert{Run this before the lecture and show saved figures} --- Rips on real data is
-        not a live-demo activity. Passing \texttt{distance\_matrix=True} lets you use cosine
-        or any learned metric instead of Euclidean.
-
-        \vspace{0.3em}
-        Software: \texttt{ripser} (fastest for Rips), \texttt{GUDHI} (broadest),
-        \texttt{giotto-tda} (scikit-learn \texttt{fit}/\texttt{transform} API --- drops into
-        an existing pipeline directly), \texttt{CubicalRipser} (images and feature maps).
     \end{frame}
 
 %----------------------------------------------------------------------
@@ -1712,7 +1941,7 @@ print(h1[order][:5])                    # five longest-lived loops
             to higher-order relations --- the subject of Part 6's closing slide.
         \end{itemize}
         \vspace{0.3em}
-        \pause
+
         \begin{center}
             \alert{Always compare against a null model} (shuffled data, Gaussian noise) before
             trusting a bar.
@@ -1722,7 +1951,7 @@ print(h1[order][:5])                    # five longest-lived loops
 %======================================================================
 
 
-    \section{6. The Hodge Laplacian \textnormal{\small(18 min)}}
+    \section{The Hodge Laplacian}
 
     \begin{frame}{Redeeming the promise from Part 3}
         So far $\partial_k$ was a map. Give $C_k=\R^{n_k}$ its standard inner product ---
@@ -1736,7 +1965,7 @@ print(h1[order][:5])                    # five longest-lived loops
         of the simplices having it as a face.
 
         \vspace{0.8em}
-        \pause
+
         \begin{block}{The Hodge (combinatorial) Laplacian}
             \[
                 \boxed{\ L_k \;=\; \underbrace{\partial_k^{\mathsf T}\partial_k}_{\text{down}}
@@ -1761,7 +1990,7 @@ print(h1[order][:5])                    # five longest-lived loops
         every boundary.
 
         \vspace{0.6em}
-        \pause
+
         \begin{block}{Hodge decomposition}
             \[
                 C_k \;=\; \underbrace{\im\partial_{k+1}}_{\text{boundaries}}\ \oplus\
@@ -1771,7 +2000,7 @@ print(h1[order][:5])                    # five longest-lived loops
             an orthogonal direct sum, and $\ker\partial_k=\im\partial_{k+1}\oplus\ker L_k$.
         \end{block}
 
-        \pause
+
         \vspace{0.3em}
         \begin{alertblock}{Consequence}
             \[
@@ -1819,7 +2048,7 @@ print(h1[order][:5])                    # five longest-lived loops
         \end{columns}
 
         \vspace{0.6em}
-        \pause
+
         \emph{Filled}: add $\partial_2\partial_2^{\mathsf T}$ with $\partial_2=(1,1,-1)^{\mathsf T}$:
         \[
             L_1=\begin{pmatrix}
@@ -1867,7 +2096,7 @@ print(h1[order][:5])                    # five longest-lived loops
         \end{enumerate}
 
         \vspace{0.5em}
-        \pause
+
         \begin{alertblock}{The point}
             $\beta_k$ only reads the eigenvalue $0$. The spectral gap $\lambda_1(L_k)$ is a
             Cheeger-type quantity that keeps changing with the mesh even while $\beta_k$ sits
@@ -1906,7 +2135,7 @@ print(h1[order][:5])                    # five longest-lived loops
 %======================================================================
 
 
-    \section{Wrap-up \& exercise \textnormal{\small(8 min)}}
+    \section{Wrap-up \& exercise}
 
     \begin{frame}[shrink=5]{Summary}
         \begin{block}{The pipeline}
@@ -1931,7 +2160,7 @@ print(h1[order][:5])                    # five longest-lived loops
         \end{itemize}
 
         \vspace{0.4em}
-        \pause
+
         \begin{alertblock}{Honest closing note}
             TDA is a complement to your toolbox, strongest when the phenomenon really is about
             connectivity, loops or branching. It is not a general-purpose accuracy boost, and it
@@ -1955,7 +2184,7 @@ print(h1[order][:5])                    # five longest-lived loops
   \draw[very thick] (v3)--(v4)--(v5)--cycle;
   \foreach \p in {v1,v2,v3,v4,v5}{\fill (\p) circle (2pt);}
   \node[left] at (v1) {$1$}; \node[left] at (v2) {$2$};
-  \node[below] at (v3) {$3$}; \node[right] at (v4) {$4$}; \node[right] at (v5) {$5$};
+  \node[below=3pt] at (v3) {$3$}; \node[right] at (v4) {$4$}; \node[right] at (v5) {$5$};
                 \end{tikzpicture}
             \end{column}
             \begin{column}{0.60\textwidth}
@@ -1974,7 +2203,7 @@ print(h1[order][:5])                    # five longest-lived loops
                 \end{enumerate}
 
                 \vspace{0.5em}
-                \pause
+
                 \footnotesize
                 \textbf{Answers.} $\rank\partial_1=4$, $\rank\partial_2=1$;
                 $\beta_0=5-4=1$, $\beta_1=(6-4)-1=1$.

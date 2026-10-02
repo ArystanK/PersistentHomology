@@ -86,6 +86,16 @@ def test_image_is_nonnegative_and_nonzero_for_a_real_diagram():
     assert (image >= 0).all() and image.sum() > 0
 
 
+def test_default_window_puts_the_most_persistent_point_inside_the_image():
+    # one point, birth 0.4 and lifetime 1.2: the brightest pixel must be that
+    # point, not an edge or a corner of the grid
+    image = vec.persistence_image(np.array([[0.4, 1.6]]), resolution=(20, 20))
+    row, col = np.unravel_index(image.argmax(), image.shape)
+    assert 0 < row < 19 and 0 < col < 19
+    edge = max(image[0].max(), image[-1].max(), image[:, 0].max(), image[:, -1].max())
+    assert image.max() > 2 * edge
+
+
 def test_linear_weighting_suppresses_points_on_the_diagonal():
     on_diagonal = np.array([[0.5, 0.5], [0.9, 0.9]])
     assert vec.persistence_image(on_diagonal, resolution=(8, 8)).sum() == 0.0

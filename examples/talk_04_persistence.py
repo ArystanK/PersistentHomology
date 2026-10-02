@@ -205,7 +205,7 @@ def main() -> None:
                 title="the whole filtration, one bar per class")
     viz.persistence_diagram(result, figure.add_subplot(1, 3, 3),
                             title="the same data as a diagram")
-    figure.suptitle("The hexagon, end to end: one long H1 bar [1, sqrt(3))",
+    figure.suptitle(r"The hexagon, end to end: one long $H_1$ bar $[1, \sqrt{3})$",
                     color=viz.INK, fontsize=13, x=0.01, ha="left", fontweight="bold")
     figure.tight_layout(rect=(0, 0, 1, 0.92))
     print("\nwrote", viz.save(figure, out("talk_04_persistence.png")))
@@ -219,8 +219,12 @@ def main() -> None:
     axes[1].set_xlabel("Hausdorff distance between the clouds",
                        color=viz.INK_SECONDARY, fontsize=10)
     axes[1].set_ylabel("bottleneck distance", color=viz.INK_SECONDARY, fontsize=10)
-    axes[1].set_title("stability, measured", color=viz.INK, fontsize=11, loc="left")
-    axes[1].legend(frameon=False, fontsize=9)
+    axes[1].set_title("stability, measured", color=viz.INK, fontsize=11, loc="left", pad=10)
+    axes[1].set_ylim(bottom=0)
+    viz.style_axes(axes[1])
+    legend = axes[1].legend(frameon=False, fontsize=9)
+    for text in legend.get_texts():
+        text.set_color(viz.INK_SECONDARY)
     figure.tight_layout()
     print("wrote", viz.save(figure, out("talk_04_stability.png")))
 

@@ -138,13 +138,14 @@ def main() -> None:
 
     # ---------------------------------------------------------------- figure
     figure, axes = plt.subplots(1, 3, figsize=(13.0, 4.4), facecolor=viz.SURFACE)
-    viz.plot_complex(LAYOUT, K, axes[0], title="the exercise complex")
-    for index, (x, y) in enumerate(LAYOUT):
-        axes[0].annotate(str(index + 1), (x, y), textcoords="offset points",
-                         xytext=(6, 6), fontsize=11, color=viz.INK)
+    names = [str(index + 1) for index in range(len(LAYOUT))]
+    viz.plot_complex(LAYOUT, K, axes[0], title="the exercise complex", vertex_labels=names)
     viz.plot_chain(LAYOUT, K, K.harmonic_basis(1)[:, 0], axes[1],
-                   title="its harmonic loop: only the empty triangle")
-    viz.barcode(cloud_result, axes[2], title="figure-eight cloud: two long H1 bars")
+                   title="its harmonic loop: only the empty triangle", vertex_labels=names)
+    # the 12 longest H0 bars are enough to show the merging; all 110 would
+    # squeeze the two H1 bars into what reads as one
+    viz.barcode(cloud_result, axes[2], max_bars_per_dim=12,
+                title=r"figure-eight cloud: two long $H_1$ bars")
     figure.suptitle("The exercise, and the appendix figure-eight",
                     color=viz.INK, fontsize=13, x=0.01, ha="left", fontweight="bold")
     figure.tight_layout(rect=(0, 0, 1, 0.92))

@@ -214,12 +214,18 @@ def main() -> None:
                 verdicts["(c) two clusters"] == ["separated clusters"])
     ok &= check("nothing fires on the blob", verdicts["(a) a blob"] == ["neither"])
 
+    # One scale for all three diagrams, as the clouds above share one: on its own
+    # axes the blob's noise would sit as far from the diagonal as the loop's bar.
+    shared_top = max(float(d[np.isfinite(d)].max())
+                     for result in results.values()
+                     for d in result.diagrams.values() if len(d))
     figure, axes = plt.subplots(2, 3, figsize=(13.5, 8.0), facecolor=viz.SURFACE)
     for column, (name, points) in enumerate(clouds.items()):
         viz.plot_points(points, axes[0, column], title=name)
         axes[0, column].set_xlim(-3.2, 3.2)
         axes[0, column].set_ylim(-3.2, 3.2)
-        viz.persistence_diagram(results[name], axes[1, column], title=f"diagram - {name}")
+        viz.persistence_diagram(results[name], axes[1, column], title=f"diagram - {name}",
+                                top=shared_top)
     figure.suptitle("Same mean, same covariance, different topology",
                     color=viz.INK, fontsize=13, x=0.01, ha="left", fontweight="bold")
     figure.tight_layout(rect=(0, 0, 1, 0.95))

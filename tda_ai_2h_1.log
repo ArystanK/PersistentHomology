@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.13)  1 OCT 2026 09:50
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.13)  1 OCT 2026 11:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1113,33 +1113,33 @@ Package: ocgbase 2024/09/15 v0.24 support package for ocgx2.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
 LaTeX Font Info:    Trying to load font information for T1+lmss on input line 1
-58.
+57.
 
 (c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (./tda_ai_2h_1.aux)
 \openout1 = `tda_ai_2h_1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 158.
-LaTeX Font Info:    ... okay on input line 158.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1175,57 +1175,57 @@ LaTeX Font Info:    ... okay on input line 158.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 158.
+Package hyperref Info: Link coloring OFF on input line 157.
 (./tda_ai_2h_1.out) (./tda_ai_2h_1.out)
 \@outlinefile=\write5
 \openout5 = `tda_ai_2h_1.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 158.
+(Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 157.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 158.
+(Font)                  OT1/lmr/bx/n --> OT1/cmss/b/n on input line 157.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 158.
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 157.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 158.
+(Font)                  OT1/cmss/b/n --> OT1/lmss/b/n on input line 157.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 158.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 158.
+(Font)                  OT1/lmss/m/n --> T1/lmr/m/n on input line 157.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 158.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 158.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 158.
+(Font)                  OT1/lmr/bx/n --> T1/lmss/b/n on input line 157.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 158.
+(Font)                  OT1/lmss/m/n --> T1/lmss/m/n on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 158.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 158.
+(Font)                  OT1/lmss/bx/n --> T1/lmss/m/n on input line 157.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 158.
+(Font)                  OT1/lmr/m/it --> T1/lmss/m/it on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 158.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 158.
+(Font)                  OT1/lmr/bx/it --> T1/lmss/m/it on input line 157.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 158.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 158.
+(Font)                  OT1/lmtt/m/n --> T1/lmtt/m/n on input line 157.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 158.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 157.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 158.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 158.
+(Font)                  OT1/lmss/b/n --> T1/lmr/b/n on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 158.
+(Font)                  T1/lmss/b/n --> T1/lmss/b/n on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 158.
+(Font)                  T1/lmss/m/n --> T1/lmss/b/n on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 158.
+(Font)                  T1/lmss/m/it --> T1/lmss/b/it on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 158.
+(Font)                  T1/lmtt/m/n --> T1/lmtt/b/n on input line 157.
 
 (c:/texlive/2025/texmf-dist/tex/latex/translator/translator-basic-dictionary-En
 glish.dict
@@ -1254,75 +1254,82 @@ Dictionary: translator-theorem-dictionary, Language: English
 \c@lstlisting=\count413
  (./tda_ai_2h_1.nav)
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <14.4> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 160.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 159.
 
-Overfull \vbox (13.79993pt too high) detected at line 160
+Overfull \vbox (13.79993pt too high) detected at line 159
  []
 
 [1
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <8> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 187.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 186.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <10> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 187.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 186.
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <12> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 187.
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 186.
  [2
 
 ]
 LaTeX Font Info:    Trying to load font information for OT1+lmss on input line 
-192.
+191.
  (c:/texlive/2025/texmf-dist/tex/latex/lm/ot1lmss.fd
 File: ot1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
-92.
+91.
 
 (c:/texlive/2025/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
-192.
+191.
 
 (c:/texlive/2025/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
-192.
+191.
 
 (c:/texlive/2025/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 192.
+(Font)              <10> on input line 191.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 192.
+(Font)              <7> on input line 191.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 192.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 192
+(Font)              <5> on input line 191.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 191
 .
 
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 192
+LaTeX Font Info:    Trying to load font information for U+msb on input line 191
 .
 
 (c:/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 192.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 191.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 192.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 191.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <5> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 192.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 191.
  [3
 
-] [4
-
-] [5
+]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <9> on input line 229.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 229.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 229.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 229.
+ [4
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+lmss on input line 
@@ -1333,31 +1340,18 @@ File: ts1lmss.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <9> not available
 (Font)              Font shape `T1/lmss/bx/n' tried instead on input line 252.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <9> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 252.
 
 
 Class beamer Warning: Frame text is shrunk by a factor of 8.61511 percent inste
 ad of 8 percent on input line 252.
 
-[6
-
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 8.61511 percent inste
-ad of 8 percent on input line 252.
-
-[7
+[5
 
 ]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 313.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 313.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <8> not available
 (Font)              Font shape `T1/lmss/m/sl' tried instead on input line 313.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <6> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 313.
 
 
 Package fontspec Warning: 
@@ -1368,25 +1362,22 @@ Package fontspec Warning:
 (fontspec)                 The current font is "\TS1/lmss/m/n/8 ".
 (fontspec)                  The requested feature is "Numbers={Monospaced}". 
 
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 313.
-[8
+[6
 
-]
+] [7
 
-Package fontspec Warning: 
-(fontspec)                \addfontfeature(s) ignored on line 313; it cannot be
-(fontspec)                used with a font that wasn't selected by a fontspec
-(fontspec)                command.
-(fontspec)                 
-(fontspec)                 The current font is "\TS1/lmss/m/n/8 ".
-(fontspec)                  The requested feature is "Numbers={Monospaced}". 
+] [8
 
-[9
+] [9
 
 ] [10
 
-] [11
+]
+
+Class beamer Warning: Frame text is shrunk by a factor of 11.07483 percent inst
+ead of 5 percent on input line 465.
+
+[11
 
 ] [12
 
@@ -1394,12 +1385,7 @@ Package fontspec Warning:
 
 ] [14
 
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 11.07483 percent inst
-ead of 5 percent on input line 465.
-
-[15
+] [15
 
 ] [16
 
@@ -1407,30 +1393,24 @@ ead of 5 percent on input line 465.
 
 ] [18
 
-] [19
+]
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 84
+1.
+
+(c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [19
 
 ] [20
 
 ] [21
 
-] [22
-
-] [23
-
-] [24
-
 ]
-LaTeX Font Info:    Trying to load font information for T1+lmr on input line 89
-0.
-
-(c:/texlive/2025/texmf-dist/tex/latex/lm/t1lmr.fd
-File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
 
 Class beamer Warning: Frame text is shrunk by a factor of 5.56946 percent inste
-ad of 5 percent on input line 890.
+ad of 5 percent on input line 941.
 
-[25
+[22
 
 ]
 File: output/rips_hexagon_frames/frame-000.png Graphic file (type bmp)
@@ -1716,39 +1696,54 @@ File: output/rips_hexagon_frames/frame-089.png Graphic file (type bmp)
 <output/rips_hexagon_frames/frame-089.png>
  <a0,fr89>
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <12> on input line 910.
+(Font)              <12> on input line 962.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <12> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 910.
- [26
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 962.
+ [23
 
 ]
 File: output/talk_02_complexes.png Graphic file (type bmp)
 <output/talk_02_complexes.png>
 LaTeX Font Info:    Font shape `T1/lmss/b/n' in size <7> not available
-(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 923.
- [27
+(Font)              Font shape `T1/lmss/bx/n' tried instead on input line 975.
+ [24
+
+] [25
+
+]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 1033.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 1033.
+
+ [26
+
+] [27
 
 ] [28
 
 ] [29
 
 ]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <14.4> on input line 981.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 981.
- [30
+[30
 
 ] [31
 
 ] [32
 
 ]
+
+Class beamer Warning: Frame text is shrunk by a factor of 10.67352 percent inst
+ead of 8 percent on input line 1221.
+
 [33
 
 ] [34
 
-] [35
+]
+File: output/talk_03_homology.png Graphic file (type bmp)
+<output/talk_03_homology.png>
+ [35
 
 ] [36
 
@@ -1760,232 +1755,191 @@ LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <14.4> not available
 
 ]
 
-Class beamer Warning: Frame text is shrunk by a factor of 10.67352 percent inst
-ead of 8 percent on input line 1169.
+Class beamer Warning: Frame text is shrunk by a factor of 13.0249 percent inste
+ad of 5 percent on input line 1413.
 
 [40
 
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 10.67352 percent inst
-ead of 8 percent on input line 1169.
-
-[41
-
-] [42
-
-] [43
-
-] [44
+] [41
 
 ]
-File: output/talk_03_homology.png Graphic file (type bmp)
-<output/talk_03_homology.png>
- [45
 
-] [46
+Package fontspec Warning: 
+(fontspec)                \addfontfeature(s) ignored on line 1511; it cannot
+(fontspec)                be used with a font that wasn't selected by a
+(fontspec)                fontspec command.
+(fontspec)                 
+(fontspec)                 The current font is "\T1/lmss/m/it/5 ".
+(fontspec)                  The requested feature is "Numbers={Monospaced}". 
 
-] [47
+[42
 
-] [48
+]
+File: output/talk_04_persistence.png Graphic file (type bmp)
+<output/talk_04_persistence.png>
+ [43
 
-] [49
+]
 
-] [50
+Package fontspec Warning: 
+(fontspec)                \addfontfeature(s) ignored on line 1569; it cannot
+(fontspec)                be used with a font that wasn't selected by a
+(fontspec)                fontspec command.
+(fontspec)                 
+(fontspec)                 The current font is "\T1/lmss/m/n/8 ".
+(fontspec)                  The requested feature is "Numbers={Monospaced}". 
+
+[44
+
+]
+
+Package fontspec Warning: 
+(fontspec)                \addfontfeature(s) ignored on line 1610; it cannot
+(fontspec)                be used with a font that wasn't selected by a
+(fontspec)                fontspec command.
+(fontspec)                 
+(fontspec)                 The current font is "\T1/lmss/m/n/8 ".
+(fontspec)                  The requested feature is "Numbers={Monospaced}". 
+
+
+Class beamer Warning: Frame text is shrunk by a factor of 27.0935 percent inste
+ad of 5 percent on input line 1610.
+
+[45
+
+]
+
+Package fontspec Warning: 
+(fontspec)                \addfontfeature(s) ignored on line 1610; it cannot
+(fontspec)                be used with a font that wasn't selected by a
+(fontspec)                fontspec command.
+(fontspec)                 
+(fontspec)                 The current font is "\T1/lmss/m/n/8 ".
+(fontspec)                  The requested feature is "Numbers={Monospaced}". 
+
+
+Class beamer Warning: Frame text is shrunk by a factor of 27.0935 percent inste
+ad of 5 percent on input line 1610.
+
+[46
+
+]
+
+Class beamer Warning: Frame text is shrunk by a factor of 15.9729 percent inste
+ad of 5 percent on input line 1675.
+
+[47
+
+]
+
+Package fontspec Warning: 
+(fontspec)                \addfontfeature(s) ignored on line 1717; it cannot
+(fontspec)                be used with a font that wasn't selected by a
+(fontspec)                fontspec command.
+(fontspec)                 
+(fontspec)                 The current font is "\T1/lmss/m/n/8 ".
+(fontspec)                  The requested feature is "Numbers={Monospaced}". 
+
+[48
+
+]
+
+Class beamer Warning: Frame text is shrunk by a factor of 27.89001 percent inst
+ead of 8 percent on input line 1753.
+
+[49
+
+]
+File: output/talk_04_stability.png Graphic file (type bmp)
+<output/talk_04_stability.png>
+ [50
 
 ] [51
 
 ] [52
 
-] [53
-
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 13.0249 percent inste
-ad of 5 percent on input line 1368.
-
-[54
-
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 13.0249 percent inste
-ad of 5 percent on input line 1368.
-
-[55
-
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 13.0249 percent inste
-ad of 5 percent on input line 1368.
-
-[56
-
-] [57
-
-]
-
-Package fontspec Warning: 
-(fontspec)                \addfontfeature(s) ignored on line 1456; it cannot
-(fontspec)                be used with a font that wasn't selected by a
-(fontspec)                fontspec command.
-(fontspec)                 
-(fontspec)                 The current font is "\T1/lmss/m/it/5 ".
-(fontspec)                  The requested feature is "Numbers={Monospaced}". 
-
-[58
-
-]
-
-Package fontspec Warning: 
-(fontspec)                \addfontfeature(s) ignored on line 1456; it cannot
-(fontspec)                be used with a font that wasn't selected by a
-(fontspec)                fontspec command.
-(fontspec)                 
-(fontspec)                 The current font is "\T1/lmss/m/it/5 ".
-(fontspec)                  The requested feature is "Numbers={Monospaced}". 
-
-[59
-
-]
-File: output/talk_04_persistence.png Graphic file (type bmp)
-<output/talk_04_persistence.png>
- [60
-
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 12.6419 percent inste
-ad of 8 percent on input line 1500.
-
-[61
-
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 12.6419 percent inste
-ad of 8 percent on input line 1500.
-
-[62
-
-]
-File: output/talk_04_stability.png Graphic file (type bmp)
-<output/talk_04_stability.png>
- [63
-
-] [64
-
-] [65
-
-] [66
-
 ]
 File: output/talk_01_motivation.png Graphic file (type bmp)
 <output/talk_01_motivation.png>
- [67
+ [53
 
-] [68
+] [54
 
-] [69
+] [55
 
-] [70
-
-] [71
+] [56
 
 ]
 File: output/talk_05_pipeline.png Graphic file (type bmp)
 <output/talk_05_pipeline.png>
- [72
+ [57
 
-] [73
+] [58
 
-]
-\openout4 = `tda_ai_2h_1.vrb'.
+] [59
 
- (./tda_ai_2h_1.vrb) [74
+] [60
 
-] [75
+] [61
 
-] [76
+] [62
 
-] [77
-
-] [78
-
-] [79
-
-] [80
-
-] [81
-
-] [82
-
-] [83
-
-] [84
+] [63
 
 ]
 File: output/talk_06_hodge_laplacian.png Graphic file (type bmp)
 <output/talk_06_hodge_laplacian.png>
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <12> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1850
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 2078
 .
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <12> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1850
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 2078
 .
- [85
+
+[64
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1878
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 2106
 .
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1878
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 2106
 .
- [86
+ [65
 
-] [87
+] [66
 
-] [88
-
-]
-[89
+] [67
 
 ]
 
 Class beamer Warning: Frame text is shrunk by a factor of 12.25433 percent inst
-ead of 5 percent on input line 1941.
+ead of 5 percent on input line 2169.
 
-[90
+[68
 
-]
-
-Class beamer Warning: Frame text is shrunk by a factor of 12.25433 percent inst
-ead of 5 percent on input line 1941.
-
-[91
-
-] [92
-
-] [93
+] [69
 
 ]
 File: output/talk_07_exercise.png Graphic file (type bmp)
 <output/talk_07_exercise.png>
- [94
+ [70
 
 ]
 
 Class beamer Warning: Frame text is shrunk by a factor of 13.40485 percent inst
-ead of 10 percent on input line 2033.
+ead of 10 percent on input line 2261.
 
-[95
+[71
 
-] [96
+] [72
 
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\translate ' on input line 2041.
+(hyperref)                removing `\translate ' on input line 2269.
 
-[97
+[73
 
 ]
 \tf@nav=\write6
@@ -2007,15 +1961,15 @@ L3 programming layer <2025-11-14>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `tda_ai_2h_1.out' has not changed.
-(rerunfilecheck)             Checksum: 1DC1D2BCFBFB757C8BD13AD9E8864B4F;1283.
+(rerunfilecheck)             Checksum: 7494F4EB3E09B8901006E0DBC015955A;1024.
  ) 
 Here is how much of TeX's memory you used:
- 34653 strings out of 468179
- 772392 string characters out of 5436883
- 1358806 words of memory out of 5000000
- 62582 multiletter control sequences out of 15000+600000
- 754725 words of font info for 147 fonts, out of 8000000 for 9000
+ 34506 strings out of 468179
+ 770842 string characters out of 5436883
+ 1315806 words of memory out of 5000000
+ 62444 multiletter control sequences out of 15000+600000
+ 754701 words of font info for 144 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 128i,15n,142p,1878b,1230s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,15n,142p,1878b,1084s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on tda_ai_2h_1.xdv (97 pages, 864848 bytes).
+Output written on tda_ai_2h_1.xdv (73 pages, 665940 bytes).

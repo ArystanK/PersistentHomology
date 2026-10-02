@@ -106,7 +106,10 @@ def persistence_image(diagram: np.ndarray, resolution: Tuple[int, int] = (20, 20
     ``weight`` is ``"linear"`` (weight = lifetime, the usual choice, and the one
     that makes the map stable) or ``"none"``.  Fixing ``birth_range`` and
     ``lifetime_range`` across a dataset is what keeps the images comparable;
-    left unset, they are read off this diagram alone.
+    left unset, both default to one square window, ``[0, 1.25 * m]`` with ``m``
+    the largest birth or lifetime in this diagram.  Square, so a Gaussian comes
+    out round; with headroom, so the most persistent point -- the one that
+    matters -- lands inside the image rather than on its corner.
     """
     diagram = _finite(diagram)
     n_birth, n_lifetime = resolution
@@ -114,10 +117,12 @@ def persistence_image(diagram: np.ndarray, resolution: Tuple[int, int] = (20, 20
     points = np.column_stack([diagram[:, 0], diagram[:, 1] - diagram[:, 0]]) \
         if len(diagram) else np.zeros((0, 2))
 
+    window = (0.0, 1.25 * float(points.max())) if len(points) and points.max() > 0 \
+        else (0.0, 1.0)
     if birth_range is None:
-        birth_range = (0.0, float(points[:, 0].max()) if len(points) else 1.0)
+        birth_range = window
     if lifetime_range is None:
-        lifetime_range = (0.0, float(points[:, 1].max()) if len(points) else 1.0)
+        lifetime_range = window
     if sigma is None:
         span = max(birth_range[1] - birth_range[0], lifetime_range[1] - lifetime_range[0])
         sigma = max(span, 1e-12) / max(max(resolution), 1) * 2.0
