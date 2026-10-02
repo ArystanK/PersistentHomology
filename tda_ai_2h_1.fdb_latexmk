@@ -1,10 +1,10 @@
 # Fdb version 4
-["xdvipdfmx"] 1790971564.29048 "tda_ai_2h_1.xdv" "tda_ai_2h_1.pdf" "tda_ai_2h_1" 1790971581.2496 0
-  "tda_ai_2h_1.xdv" 1790971563 665896 6f63d39069c07bd0f89b94cc248cad9c "xelatex"
+["xdvipdfmx"] 1790975241.74443 "tda_ai_2h_1.xdv" "tda_ai_2h_1.pdf" "tda_ai_2h_1" 1790975253.6577 0
+  "tda_ai_2h_1.xdv" 1790975241 679244 23e5850126d8cbbcf4a7cfb57443b04f "xelatex"
   (generated)
   "tda_ai_2h_1.pdf"
   (rewritten before read)
-["xelatex"] 1790971551.71776 "tda_ai_2h_1.tex" "tda_ai_2h_1.xdv" "tda_ai_2h_1" 1790971581.21971 0
+["xelatex"] 1790975236.35162 "tda_ai_2h_1.tex" "tda_ai_2h_1.xdv" "tda_ai_2h_1" 1790975253.63551 0
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1765656156 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1765661447 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm" 1765655220 3584 adb004a0c8e7c46ee66cad73671f37b4 ""
@@ -361,14 +361,15 @@
   "output/talk_02_complexes.png" 1790835642 148045 782cd7a5cbd4dfe1134ca7e5489df2f6 ""
   "output/talk_03_homology.png" 1790835648 103363 6a1df1eb55d4f28b822feb7f72d62003 ""
   "output/talk_04_persistence.png" 1790834706 82474 d12377f0c6d1176104e9fcb03a181681 ""
+  "output/talk_04_signal_vs_noise.png" 1790975177 126266 bf894b90287b6d7d6e8b05cd893ce18a ""
   "output/talk_04_stability.png" 1790834706 86253 981316f1926de58fd0a8029faa69a800 ""
   "output/talk_05_pipeline.png" 1790835279 163113 3d2517cbd720b6781974aa8003d4c12e ""
   "output/talk_06_hodge_laplacian.png" 1790835625 105603 0181f361dc4c7aec1d8f8ee7b60c9ef3 ""
   "output/talk_07_exercise.png" 1790835629 67125 52494b443427f8bc185eba2682903d57 ""
-  "tda_ai_2h_1.aux" 1790971563 14847 f24d480da0724d00d42f5813c7adb069 "xelatex"
-  "tda_ai_2h_1.nav" 1790971563 8300 659b22b5606ceb162712a3a784c67670 "xelatex"
-  "tda_ai_2h_1.out" 1790971563 1024 7494f4eb3e09b8901006e0dbc015955a "xelatex"
-  "tda_ai_2h_1.tex" 1790971550 104791 444ced4ef105f4459be4516ae54e45f5 ""
+  "tda_ai_2h_1.aux" 1790975241 15189 d25cdf41726e6a96eae8890a5d800b47 "xelatex"
+  "tda_ai_2h_1.nav" 1790975241 8486 c2510f2f9bfe4439ab805bd311c5f161 "xelatex"
+  "tda_ai_2h_1.out" 1790975241 1024 7494f4eb3e09b8901006e0dbc015955a "xelatex"
+  "tda_ai_2h_1.tex" 1790975235 105110 6bb56877eec2db869983bf25d952654e ""
   (generated)
   "tda_ai_2h_1.aux"
   "tda_ai_2h_1.log"

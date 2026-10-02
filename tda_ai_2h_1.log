@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.13)  3 OCT 2026 01:05
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.13)  3 OCT 2026 02:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1858,24 +1858,36 @@ File: output/talk_04_stability.png Graphic file (type bmp)
 ] [52
 
 ]
+File: output/talk_04_signal_vs_noise.png Graphic file (type bmp)
+<output/talk_04_signal_vs_noise.png>
+
+Overfull \vbox (0.79991pt too high) detected at line 1712
+ []
+
+[53
+
+]
+
+Class beamer Warning: Frame text is shrunk by a factor of 10.26917 percent inst
+ead of 5 percent on input line 1737.
+
+[54
+
+]
 File: output/talk_01_motivation.png Graphic file (type bmp)
 <output/talk_01_motivation.png>
- [53
-
-] [54
-
-] [55
+ [55
 
 ] [56
+
+] [57
+
+] [58
 
 ]
 File: output/talk_05_pipeline.png Graphic file (type bmp)
 <output/talk_05_pipeline.png>
- [57
-
-] [58
-
-] [59
+ [59
 
 ] [60
 
@@ -1885,60 +1897,64 @@ File: output/talk_05_pipeline.png Graphic file (type bmp)
 
 ] [63
 
+] [64
+
+] [65
+
 ]
 File: output/talk_06_hodge_laplacian.png Graphic file (type bmp)
 <output/talk_06_hodge_laplacian.png>
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <12> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1937
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1982
 .
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <12> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1937
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1982
 .
-
-[64
+ [66
 
 ]
 LaTeX Font Info:    Font shape `T1/lmss/b/it' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 1964
+(Font)              Font shape `T1/lmss/bx/it' tried instead on input line 2009
 .
 LaTeX Font Info:    Font shape `T1/lmss/bx/it' in size <9> not available
-(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 1964
+(Font)              Font shape `T1/lmss/bx/sl' tried instead on input line 2009
 .
- [65
+ [67
 
-] [66
+] [68
 
-] [67
+]
+[69
 
 ]
 
 Class beamer Warning: Frame text is shrunk by a factor of 12.25433 percent inst
-ead of 5 percent on input line 2023.
+ead of 5 percent on input line 2068.
 
-[68
+[70
 
-] [69
+] [71
 
 ]
 File: output/talk_07_exercise.png Graphic file (type bmp)
 <output/talk_07_exercise.png>
- [70
+ [72
 
 ]
 
 Class beamer Warning: Frame text is shrunk by a factor of 16.67938 percent inst
-ead of 10 percent on input line 2112.
+ead of 10 percent on input line 2157.
 
-[71
+[73
 
-] [72
+] [74
 
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\translate ' on input line 2118.
+(hyperref)                removing `\translate ' on input line 2163.
 
-[73
+[75
 
 ]
 \tf@nav=\write6
@@ -1963,12 +1979,12 @@ Package rerunfilecheck Info: File `tda_ai_2h_1.out' has not changed.
 (rerunfilecheck)             Checksum: 7494F4EB3E09B8901006E0DBC015955A;1024.
  ) 
 Here is how much of TeX's memory you used:
- 34506 strings out of 468179
- 770842 string characters out of 5436883
+ 34529 strings out of 468179
+ 771559 string characters out of 5436883
  1315805 words of memory out of 5000000
- 62444 multiletter control sequences out of 15000+600000
+ 62467 multiletter control sequences out of 15000+600000
  754701 words of font info for 144 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  128i,15n,142p,1878b,1084s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on tda_ai_2h_1.xdv (73 pages, 665896 bytes).
+Output written on tda_ai_2h_1.xdv (75 pages, 679244 bytes).

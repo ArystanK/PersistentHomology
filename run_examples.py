@@ -1,7 +1,7 @@
 """Run the example scripts, writing figures to ``output/``.
 
     python run_examples.py                 # the five library examples
-    python run_examples.py --talk          # the seven tutorial examples
+    python run_examples.py --talk          # the eight tutorial examples
     python run_examples.py --all           # everything
     python run_examples.py 03_higher_dimensions.py talk_06_hodge_laplacian.py
 """
@@ -28,6 +28,7 @@ TALK_SCRIPTS = [
     "talk_02_complexes.py",
     "talk_03_homology.py",
     "talk_04_persistence.py",
+    "talk_04_signal_vs_noise.py",
     "talk_05_pipeline.py",
     "talk_06_hodge_laplacian.py",
     "talk_07_exercise.py",

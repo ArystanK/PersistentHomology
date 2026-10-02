@@ -798,6 +798,8 @@ INPUT ./output/talk_04_persistence.png
 INPUT ./output/talk_04_persistence.png
 INPUT ./output/talk_04_stability.png
 INPUT ./output/talk_04_stability.png
+INPUT ./output/talk_04_signal_vs_noise.png
+INPUT ./output/talk_04_signal_vs_noise.png
 INPUT ./output/talk_01_motivation.png
 INPUT ./output/talk_01_motivation.png
 INPUT ./output/talk_05_pipeline.png

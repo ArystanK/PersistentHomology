@@ -1691,6 +1691,51 @@
         \end{itemize}
     \end{frame}
 
+    \begin{frame}{Which bars are the shape?}
+        \footnotesize
+        \begin{columns}[T,onlytextwidth]
+            \begin{column}{0.3\textwidth}
+                \textbf{Margin.} Longest bar over the runner-up. Cheap, no guarantee.
+            \end{column}
+            \begin{column}{0.33\textwidth}
+                \textbf{Null model.} Shuffle each coordinate: same marginals, no shape. Beat
+                its $95$th percentile.
+            \end{column}
+            \begin{column}{0.33\textwidth}
+                \textbf{Bootstrap band} \emph{(Fasy et al.\ 2014)}. Resample; $c$ = $95$th
+                percentile of $\dB(\Dgm X,\Dgm X^*)$. Beat $2c$.
+            \end{column}
+        \end{columns}
+        \computedfig[0.47]{talk_04_signal_vs_noise}{%
+            Both tests are lines parallel to the diagonal. Only the loop clears both: $1.684$
+            against a null of $0.628$ and a band of $0.598$.}{talk\_04\_signal\_vs\_noise.py}
+    \end{frame}
+
+    \begin{frame}[shrink=5]{If nothing is stable}
+        \small
+        The blob: its longest $H_1$ bar ($0.32$) is inside the null ($0.49$) and inside the
+        band ($0.57$). No feature survives. What we \emph{can} conclude:
+        \begin{itemize}
+            \item \textbf{At this sample size the data look like a structureless blob:} one
+            component, no loops. That is a result --- and the case where PCA and clustering
+            are the right tools.
+            \item \textbf{It is an upper bound, not proof of absence:} no loop larger than
+            $2c\approx0.57$ in the data's units. A smaller one may exist; more points shrink $c$.
+            \item \textbf{Check the modelling choices first:} the metric (Part 2), outliers
+            (trim, or a density-aware filtration), normalisation.
+        \end{itemize}
+        \begin{alertblock}{Two traps}
+            \begin{itemize}
+                \item \textbf{Automatic choices always answer.} The ``most stable scale'' of the
+                blob is $\varepsilon=0.60$ with $\beta=(2,6)$. Test whatever it picks.
+                \item \textbf{Pick a null that destroys what you test.} The clusters' $H_0$ gap
+                ($1.31$) is \emph{inside} the shuffle null ($1.47$): shuffling each coordinate
+                keeps the gap between the clusters. The bootstrap band ($0.78$) sees it.
+            \end{itemize}
+        \end{alertblock}
+        \figcredit{talk\_04\_signal\_vs\_noise.py}
+    \end{frame}
+
     \ifcomputedslides
     \begin{frame}{The three data sets from Part 1, answered}
         \computedfigside[0.62]{talk_01_motivation}{%

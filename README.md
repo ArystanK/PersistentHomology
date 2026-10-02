@@ -26,7 +26,7 @@ tests/              140 tests: hand-checked complexes, known topologies, invaria
 ```bash
 pip install -r requirements.txt
 python run_examples.py        # the five library examples, ~2 minutes
-python run_examples.py --talk # the seven tutorial examples, ~4 minutes
+python run_examples.py --talk # the eight tutorial examples, ~10 minutes
 pytest                        # 140 tests, ~40 seconds
 ```
 
@@ -112,6 +112,7 @@ python run_examples.py --talk
 | `talk_02_complexes.py` | Six points on the unit circle at the three Rips regimes: dust, the closed hexagon, and the octahedron boundary at ε = √3. Includes a real Čech complex (smallest enclosing ball), which keeps the loop at ε = √3 where Rips has already lost it — so the cost argument for Rips is shown with the price attached. Also writes the 90 frames of the ε sweep that the deck animates on the Rips slide. |
 | `talk_03_homology.py` | ∂₁ and ∂₂ printed with labelled rows and columns, ∂∂ = 0 multiplied out, hollow vs filled, the tetrahedron boundary, and the three sanity checks: β₀ against a union-find component count, β₁ = E − V + C, and the Euler characteristic both ways. Ends with the slide's reference table — circle (1,1,0), sphere (1,0,1), torus (1,2,1), disk (1,0,0) — on explicit triangulations. The figure puts the hollow/filled board computation next to the matrices behind it, in the slide's edge order. |
 | `talk_04_persistence.py` | The hexagon's event table and barcode; the reduction's creator/destroyer pairing printed simplex by simplex; H0 death times shown to be *exactly* the MST edge weights, so H0 persistence is single-linkage clustering; the stability bound measured; and each of the four "read a diagram honestly" warnings reproduced as a number, including the H2 bar [√3, 2) that is a Rips artifact and not a fact about the data. |
+| `talk_04_signal_vs_noise.py` | Which bars are the shape? A coordinate-shuffle null model and a bootstrap confidence band (Fasy et al. 2014) on the three Part 1 clouds: the loop's H1 bar clears both, the blob's passes neither (the "stable nowhere" case). Also shows the two traps: an automatic "most stable scale" still names a Betti vector on the blob, and the shuffle null cannot see the two clusters' H0 gap while the bootstrap can. |
 | `talk_05_pipeline.py` | Betti curve, landscape and image on one diagram, with the landscape's 1-Lipschitz property measured rather than asserted. Then a full pipeline on closed loops vs 85–93% arcs — a task where moment features genuinely struggle: baseline 0.67, topological 0.83, concatenated 0.88. Ends with the null-model comparison the talk closes on. |
 | `talk_06_hodge_laplacian.py` | L₀ = ∂₁∂₁ᵀ = D − A checked on five complexes; the triangle's spectra {0,3,3} hollow and {3,3,3} filled; β_k = dim ker L_k against rank-nullity on seven complexes; the harmonic representative that answers "*where* is the loop?"; subdivision moving the spectral gap 3 → 1 → 0.268 while β₁ never budges; and HodgeRank splitting a cyclic preference from a consistent ranking. |
 | `talk_07_exercise.py` | The closing exercise worked in full — all five steps, then the same answer again through L₀ and L₁ — plus the appendix figure-eight, both as an abstract complex and through the Rips pipeline on a point cloud. |
