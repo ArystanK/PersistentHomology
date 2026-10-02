@@ -1,10 +1,10 @@
 # Fdb version 4
-["xdvipdfmx"] 1790837811.15312 "tda_ai_2h_1.xdv" "tda_ai_2h_1.pdf" "tda_ai_2h_1" 1790837823.12219 0
-  "tda_ai_2h_1.xdv" 1790837810 665940 d748f5e5120b3384823a0f5f9bce55a9 "xelatex"
+["xdvipdfmx"] 1790971564.29048 "tda_ai_2h_1.xdv" "tda_ai_2h_1.pdf" "tda_ai_2h_1" 1790971581.2496 0
+  "tda_ai_2h_1.xdv" 1790971563 665896 6f63d39069c07bd0f89b94cc248cad9c "xelatex"
   (generated)
   "tda_ai_2h_1.pdf"
   (rewritten before read)
-["xelatex"] 1790837804.7918 "tda_ai_2h_1.tex" "tda_ai_2h_1.xdv" "tda_ai_2h_1" 1790837823.08651 0
+["xelatex"] 1790971551.71776 "tda_ai_2h_1.tex" "tda_ai_2h_1.xdv" "tda_ai_2h_1" 1790971581.21971 0
   "c:/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1765656156 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1765661447 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "c:/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm" 1765655220 3584 adb004a0c8e7c46ee66cad73671f37b4 ""
@@ -365,10 +365,10 @@
   "output/talk_05_pipeline.png" 1790835279 163113 3d2517cbd720b6781974aa8003d4c12e ""
   "output/talk_06_hodge_laplacian.png" 1790835625 105603 0181f361dc4c7aec1d8f8ee7b60c9ef3 ""
   "output/talk_07_exercise.png" 1790835629 67125 52494b443427f8bc185eba2682903d57 ""
-  "tda_ai_2h_1.aux" 1790837810 14847 f24d480da0724d00d42f5813c7adb069 "xelatex"
-  "tda_ai_2h_1.nav" 1790837810 8300 659b22b5606ceb162712a3a784c67670 "xelatex"
-  "tda_ai_2h_1.out" 1790837810 1024 7494f4eb3e09b8901006e0dbc015955a "xelatex"
-  "tda_ai_2h_1.tex" 1790837803 113716 d58fc418cb1374d09ef8197998db3647 ""
+  "tda_ai_2h_1.aux" 1790971563 14847 f24d480da0724d00d42f5813c7adb069 "xelatex"
+  "tda_ai_2h_1.nav" 1790971563 8300 659b22b5606ceb162712a3a784c67670 "xelatex"
+  "tda_ai_2h_1.out" 1790971563 1024 7494f4eb3e09b8901006e0dbc015955a "xelatex"
+  "tda_ai_2h_1.tex" 1790971550 104791 444ced4ef105f4459be4516ae54e45f5 ""
   (generated)
   "tda_ai_2h_1.aux"
   "tda_ai_2h_1.log"

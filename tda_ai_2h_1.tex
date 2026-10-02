@@ -1,31 +1,7 @@
-%=======================================================================
-%  Introduction to Topological Data Analysis
-%  2 hours.  Audience: AI researchers (Kazakhstan) with NO topology
-%  background, but fluent in linear algebra, graphs, and ML pipelines.
-%
-%  Design decisions:
-%    * homology is presented as pure linear algebra (rank-nullity)
-%    * we work over R throughout; F_2 and torsion get one honest sentence
-%    * no functors, no exact sequences, no nerve-theorem hypotheses
-%    * orientation conventions are cut to a single rule
-%    * the hollow/filled triangle is the spine of the talk: it computes
-%      beta_1 in Part 3 and reappears as L_1 in Part 6
-%    * Part 3 opens by naming the graph Laplacian L=D-A the audience
-%      already knows from spectral clustering / GCNs, and promises to
-%      generalize it -- Part 6 redeems that promise
-%    * former "2-hour appendix" material (graph warm-up, tetrahedron,
-%      Cech/alpha, Laplacian exercise) now lives in the main flow;
-%      the appendix is a short, genuinely optional overflow
-%
-%  Compile:  pdflatex tda_ai_2h_1.tex   (twice)
-%=======================================================================
 \documentclass[10pt,aspectratio=169]{beamer}
 
 \usetheme{metropolis}
 \metroset{block=fill,numbering=fraction,progressbar=frametitle}
-% ---- fallback if metropolis is unavailable ----
-% \usetheme{Madrid}\usecolortheme{whale}\useinnertheme{circles}
-% \setbeamertemplate{navigation symbols}{}
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -55,37 +31,18 @@
 \newcommand{\Dgm}{\mathrm{Dgm}}
 \newcommand{\dB}{d_{\mathrm{B}}}
 \newcommand{\dH}{d_{\mathrm{H}}}
-\newcommand{\Tau}{\mathcal{T}}  % a topology; capital tau has no command of its own
+\newcommand{\Tau}{\mathcal{T}}  %
 \newcommand{\im}{\operatorname{im}}
 \newcommand{\rank}{\operatorname{rank}}
 \newcommand{\nullity}{\operatorname{nullity}}
 \newcommand{\diam}{\operatorname{diam}}
 \newcommand{\HL}[1]{\textcolor{blue!70!black}{#1}}
 
-%-----------------------------------------------------------------------
-%  Computed figures.
-%
-%  The PNGs live in output/ and are produced by the example scripts that
-%  ship with this deck:
-%
-%      python run_examples.py --talk
-%
-%  Each script recomputes what its part of the talk asserts and prints a
-%  pass/fail list, so every figure below is evidence rather than
-%  illustration.  The IfFileExists guard keeps the deck compiling for
-%  anyone who has not run the scripts yet.
-%-----------------------------------------------------------------------
 \graphicspath{{output/}}
 
-% The nine computed-figure frames add roughly nine minutes to a talk whose
-% budget is already tight.  Flip this to \computedslidesfalse to drop all of
-% them at once and keep the original running time; nothing else refers to them.
 \newif\ifcomputedslides
 \computedslidestrue
 
-% Shown in place of a figure that has not been generated yet.  The file name is
-% \detokenize'd because it contains underscores, which are subscripts in text
-% mode; \includegraphics handles them itself, but \texttt does not.
 \newcommand{\figmissing}[1]{%
     \fbox{\parbox[c][0.4\textheight][c]{0.8\linewidth}{\centering\scriptsize
     \texttt{\detokenize{output/#1.png}} has not been generated yet.
@@ -95,8 +52,6 @@
 \newcommand{\figcredit}[1]{%
         {\scriptsize\textcolor{gray}{computed by \texttt{examples/#1}}}}
 
-% Wide figures (a single row of panels): full width, caption underneath.
-% \computedfig[height fraction]{file base name}{what to read off it}{script}
 \newcommand{\computedfig}[4][0.60]{%
     \begin{center}
     \IfFileExists{output/#2.png}
@@ -109,9 +64,6 @@
     \figcredit{#4}%
 }
 
-% Tall figures (a grid of panels): the caption moves alongside, so the image
-% can use the full height of a 16:9 slide instead of being squeezed by it.
-% \computedfigside[image column width]{file base name}{reading}{script}
 \newcommand{\computedfigside}[4][0.62]{%
     \begin{columns}[c,onlytextwidth]
     \begin{column}{#1\textwidth}
@@ -132,7 +84,6 @@
     \foreach \i/\a in {1/0,2/60,3/120,4/180,5/240,6/300}{\coordinate (P\i) at (\a:1.5);}}
 \newcommand{\hexdots}{\foreach \i in {1,...,6}{\fill[black] (P\i) circle (2pt);}}
 
-% the triangle that runs through the whole talk
 \newcommand{\spinetriangle}[1]{%
     \begin{tikzpicture}[scale=1.15]
     \coordinate (a) at (0,0); \coordinate (b) at (1.5,0); \coordinate (c) at (0.75,1.25);
@@ -158,7 +109,6 @@
 
     \maketitle
 
-%======================================================================
     \begin{frame}{Plan}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.55\textwidth}
@@ -184,9 +134,6 @@
             \end{column}
         \end{columns}
     \end{frame}
-
-%======================================================================
-
 
     \section{Motivation}
 
@@ -221,14 +168,12 @@
         and it answers $k=3$ for all three --- cutting the loop, one connected piece,
         into three arcs.
 
-
         \vspace{0.3em}
         \begin{center}
             \alert{Nothing in the standard toolbox has a slot for ``there is a hole in the middle''.}
         \end{center}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=8]{Where loops and holes already show up in your work}
         \small
         \begin{itemize}
@@ -251,7 +196,6 @@
         \end{center}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Betti numbers: counting holes, one dimension at a time}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.48\textwidth}
@@ -306,13 +250,11 @@
             \end{column}
         \end{columns}
 
-
         \vspace{0.3em}
         \centering\small PCA and clustering miss \alert{$\beta_1$} entirely. Part 3 computes these
         numbers as ranks of matrices; Part 4 makes them survive noise.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=15]{What we are going to build, and what we are skipping}
         \begin{block}{The goal}
             An invariant $\beta_k$ that counts $k$-dimensional holes, is computed by
@@ -357,7 +299,6 @@
         \end{alertblock}
     \end{frame}
 
-
     \section{From points to complexes}
 
     \begin{frame}[shrink=8]{Topological space}
@@ -376,20 +317,17 @@
         \end{block}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=5]{What an open set means}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.44\textwidth}
                 \centering
                 \begin{tikzpicture}[scale=0.9]
-                    % open disk: dashed edge, the edge is not part of the set
                     \fill[blue!15] (0,0) circle (1.1);
                     \draw[blue!60!black,dashed,thick] (0,0) circle (1.1);
                     \fill (0.45,0.25) circle (1.6pt);
                     \node at (0.45,0.72) {\scriptsize $x$};
                     \draw[green!50!black,thick] (0.45,0.25) circle (0.3);
                     \node at (0,-1.5) {\scriptsize open: every point has room};
-                    % closed disk: solid edge, with a point sitting on it
                     \begin{scope}[shift={(3.0,0)}]
                         \fill[blue!15] (0,0) circle (1.1);
                         \draw[blue!60!black,thick] (0,0) circle (1.1);
@@ -398,7 +336,6 @@
                         \draw[red!70!black,thick] (1.1,0) circle (0.3);
                         \node at (0,-1.5) {\scriptsize closed: $p$ has none};
                     \end{scope}
-                    % the same thing on the line
                     \begin{scope}[shift={(0,-2.4)}]
                         \draw[thick] (-0.8,0) -- (0.8,0);
                         \node at (-0.8,0) {$($}; \node at (0.8,0) {$)$};
@@ -432,7 +369,6 @@
         \end{columns}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=5]{Examples of topologies}
         \small
         \begin{itemize}
@@ -482,7 +418,6 @@
 
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=3]{Continuity: examples}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.56\textwidth}
@@ -514,12 +449,10 @@
                 \begin{tikzpicture}[scale=0.85]
                     \draw[->,gray] (-2.2,0) -- (2.4,0) node[right] {\scriptsize $x$};
                     \draw[->,gray] (0,-0.4) -- (0,2.0);
-                    % the step function
                     \draw[very thick,blue!60!black] (-2.1,0) -- (0,0);
                     \draw[very thick,blue!60!black] (0,1) -- (2.1,1);
                     \fill[blue!60!black] (0,1) circle (2.2pt);
                     \draw[blue!60!black,fill=white] (0,0) circle (2.2pt);
-                    % V = (1/2, 3/2) on the y-axis, and its preimage [0, inf)
                     \draw[orange!80!black,line width=3pt,opacity=0.6] (-0.15,0.5) -- (-0.15,1.5);
                     \node[orange!80!black,left] at (-0.2,1.5) {\scriptsize $V=(\tfrac12,\tfrac32)$};
                     \draw[red!70!black,line width=3pt,opacity=0.6] (0,-0.2) -- (2.1,-0.2);
@@ -539,7 +472,6 @@
         \end{columns}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Homeomorphisms: examples}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.56\textwidth}
@@ -553,7 +485,6 @@
                     radially outwards (picture). Corners are not topological.
                     \item A coffee mug $\cong$ a doughnut (next slide).
                 \end{itemize}
-
 
                 \vspace{0.4em}
                 \textbf{Why $g$ must be continuous too.} $t\mapsto(\cos t,\sin t)$ maps
@@ -589,17 +520,13 @@
         \end{columns}
     \end{frame}
 
-%----------------------------------------------------------------------
-% Each piece is outlined first and filled second, so the fills hide every
-% outline that falls inside the clay and only the silhouette is left.
-\newcommand{\clayring}[3]{% centre, outer radius, inner radius
+\newcommand{\clayring}[3]{%
     \draw[blue!60!black,very thick] #1 circle (#2) #1 circle (#3);}
 \newcommand{\clayringfill}[3]{%
     \fill[blue!25,even odd rule] #1 circle (#2) #1 circle (#3);}
     \begin{frame}{A coffee mug is a doughnut}
         \begin{center}
             \begin{tikzpicture}[scale=1.15]
-                % 1: the mug
                 \begin{scope}
                     \clayring{(0.85,0.05)}{0.48}{0.24}
                     \draw[blue!60!black,very thick] (-0.65,-0.75) rectangle (0.6,0.75);
@@ -609,7 +536,6 @@
                     \node at (0.2,-1.25) {\small a mug};
                 \end{scope}
                 \draw[->,thick,gray] (1.55,0) -- (2.35,0);
-                % 2: the cup sinks into the handle
                 \begin{scope}[shift={(3.55,0)}]
                     \clayring{(0.6,0)}{0.52}{0.25}
                     \draw[blue!60!black,very thick,rounded corners=6pt] (-0.8,-0.55) rectangle (0.3,0.3);
@@ -619,7 +545,6 @@
                     \node at (0,-1.25) {\small the cup shrinks};
                 \end{scope}
                 \draw[->,thick,gray] (4.85,0) -- (5.65,0);
-                % 3: a lump on the ring
                 \begin{scope}[shift={(6.9,0)}]
                     \draw[blue!60!black,very thick] (-0.42,0) ellipse (0.5 and 0.42);
                     \clayring{(0.4,0)}{0.6}{0.26}
@@ -628,7 +553,6 @@
                     \node at (0,-1.25) {\small a lump on the ring};
                 \end{scope}
                 \draw[->,thick,gray] (8.15,0) -- (8.95,0);
-                % 4: the doughnut
                 \begin{scope}[shift={(10.2,0)}]
                     \draw[blue!60!black,very thick] (0,0) ellipse (1.0 and 0.6) (0,0.03) ellipse (0.36 and 0.15);
                     \fill[blue!25,even odd rule] (0,0) ellipse (1.0 and 0.6) (0,0.03) ellipse (0.36 and 0.15);
@@ -651,7 +575,6 @@
         \end{center}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=3]{Connected spaces}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.56\textwidth}
@@ -682,7 +605,6 @@
             \begin{column}{0.42\textwidth}
                 \centering
                 \begin{tikzpicture}[scale=0.8]
-                    % two blobs, each inside its own open set
                     \fill[blue!25] (-1.1,0) ellipse (0.7 and 0.5);
                     \fill[blue!25] (1.2,0.1) ellipse (0.6 and 0.6);
                     \draw[orange!80!black,dashed,thick] (-1.1,0) ellipse (0.95 and 0.75);
@@ -690,7 +612,6 @@
                     \node[orange!80!black] at (-1.1,-1.0) {\scriptsize $U$};
                     \node[orange!80!black] at (1.2,-1.0) {\scriptsize $V$};
                     \node at (0.05,-1.55) {\scriptsize not connected: $U$, $V$ split it};
-                    % one blob, joined by a path
                     \begin{scope}[shift={(0,-3.1)}]
                         \fill[blue!25] plot[smooth cycle,tension=0.8]
                             coordinates {(-1.8,0) (-1.0,0.6) (0,0.25) (1.0,0.7) (1.8,0.1) (1.0,-0.6) (0,-0.3) (-1.0,-0.55)};
@@ -711,7 +632,6 @@
         \end{columns}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=3]{Compact spaces}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.56\textwidth}
@@ -741,7 +661,6 @@
             \begin{column}{0.42\textwidth}
                 \centering
                 \begin{tikzpicture}[scale=0.85]
-                    % (0,1) and the cover (1/n, 1), n = 2..7, creeping towards 0
                     \draw[thick] (0,0) -- (4,0);
                     \node at (0,0) {$($}; \node at (4,0) {$)$};
                     \node at (0,-0.35) {\scriptsize $0$}; \node at (4,-0.35) {\scriptsize $1$};
@@ -789,7 +708,6 @@
         \alert{The open balls of the metric generate a topology on $X$.}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=10]{Hausdorff distance: how far apart two point clouds are}
         \begin{block}{Hausdorff distance}
             For finite $X,Y$ in a metric space,
@@ -805,7 +723,6 @@
             \begin{column}{0.52\textwidth}
                 \centering
                 \begin{tikzpicture}[scale=0.8]
-                    % (a) one point of the hexagon moved outwards (drawn larger than 0.1)
                     \foreach \a in {60,120,180,240,300}{\fill (\a:1) circle (2.2pt);}
                     \draw[gray] (0:1) circle (2.2pt);
                     \fill[orange!85!black] (0:1.4) circle (2.2pt);
@@ -813,7 +730,6 @@
                     \node[align=center] at (0.2,-1.55)
                         {\scriptsize (a) one point moved by $0.1$\\[-1pt]
                          \scriptsize $\dH=0.1$ \ (move drawn larger)};
-                    % (b) the hexagon plus one outlier
                     \begin{scope}[shift={(3.9,0)}]
                         \foreach \a in {0,60,...,300}{\fill (\a:1) circle (2.2pt);}
                         \fill[orange!85!black] (2.5,0) circle (2.2pt);
@@ -840,7 +756,6 @@
         \end{columns}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Thicken the points}
         \textbf{The problem.} A finite point cloud is topologically trivial: $n$ isolated
         points, $\beta_0=n$.
@@ -853,7 +768,6 @@
         Fix $\varepsilon>0$ and replace each point by a ball of radius $\varepsilon/2$.
         Let's consider the union $\bigcup_i B(x_i,\varepsilon/2)$.
         \begin{center}
-            % hexagon side 1.5: balls touch at radius 0.75 and cover the centre at 1.5
             \begin{tikzpicture}[scale=0.52]
 \foreach \s/\rad/\lab in {0/0.12/{\small dust}, 5.0/0.9/{\small \alert{the loop}}, 11.0/1.6/{\small blob}} {
     \begin{scope}[shift={(\s,0)}]
@@ -867,7 +781,6 @@
         \vspace{-0.3em}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Simplicial complexes, in one slide}
         \small
         A \HL{$k$-simplex} is a set of $k+1$ vertices: a point, an edge, a triangle, a
@@ -904,7 +817,6 @@
         the way it already holds a sparse graph.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=5]{The Vietoris--Rips complex}
         \begin{block}{Definition}
             \[
@@ -940,9 +852,6 @@
         appears. At $\varepsilon=\sqrt3$ the triangles fill in and it is gone.
     \end{frame}
 
-%----------------------------------------------------------------------
-% 90 frames written by talk_02_complexes.py; frame 50 is eps ~ 1.24, inside the
-% loop regime, and is what viewers without JavaScript show as a still.
     \ifcomputedslides
     \begin{frame}{The Vietoris--Rips complex, as $\varepsilon$ grows}
         \begin{center}
@@ -962,7 +871,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{The same six points, actually computed}
         \computedfigside[0.60]{talk_02_complexes}{%
@@ -975,7 +883,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \begin{frame}{Two better (and pricier) alternatives}
         \small
         \begin{block}{\v{C}ech complex}
@@ -1003,7 +910,6 @@
         smallest-enclosing-ball test to be so.\par}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{The problem we are not going to solve yet}
         \begin{center}
             \Large \alert{Which $\varepsilon$?}
@@ -1032,12 +938,8 @@
         \end{alertblock}
     \end{frame}
 
-%======================================================================
-
-
     \section{Homology}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=5]{You already know a special case}
         Recall the graph Laplacian $L=D-A$ (degree minus adjacency), or equivalently
         $L=BB^{\mathsf T}$ for the signed incidence matrix $B$. Spectral clustering
@@ -1062,7 +964,6 @@
         \end{alertblock}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Chains are vectors}
         Let $n_k$ be the number of $k$-simplices of $K$.
 
@@ -1084,7 +985,6 @@
         \HL{Over $\bF_2$ all signs are $1$ and you can ignore this slide entirely.}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=12]{The boundary operator is a matrix}
         \begin{block}{Definition}
             $\partial_k : C_k\to C_{k-1}$ is the linear map defined on basis vectors by
@@ -1112,7 +1012,6 @@
         $\partial_1$ is not a new object --- it is the one you already had a name for.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Our running example}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.36\textwidth}
@@ -1150,7 +1049,6 @@
         \end{center}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=8]{$\partial\circ\partial=0$ is a matrix product}
         \begin{block}{The fundamental identity}
             \[
@@ -1175,7 +1073,6 @@
             \end{pmatrix}.
         \]
 
-
         \vspace{0.3em}
         \textbf{Why in general.} Deleting two vertices $v_i,v_j$ from $\sigma$ can be done in
         two orders, and the two resulting signs are opposite. Every codimension-$2$ face is
@@ -1189,7 +1086,6 @@
         \end{alertblock}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=8]{Cycles, boundaries, Betti numbers}
         \begin{block}{}
             \[
@@ -1220,7 +1116,6 @@
         same computation your linear-algebra library already does for you.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Hollow versus filled}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.30\textwidth}
@@ -1264,11 +1159,10 @@
         \end{columns}
     \end{frame}
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{Hollow versus filled, actually computed}
         \computedfig[0.56]{talk_03_homology}{%
-            The board computation, done by the code in the same edge order. $\partial_1$ has
+            The computation from the previous slide, done by the code in the same edge order. $\partial_1$ has
             rank $2$, so its kernel is one-dimensional and spanned by $z$, drawn on the left
             as a flow round the triangle. Filling in $t$ adds one column to $\partial_2$, and
             that column \emph{is} $z$: the cycle is now a boundary and $\beta_1$ drops from
@@ -1276,7 +1170,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \begin{frame}{Boundary of a tetrahedron}
         \small
         $K=$ all proper faces of $[1,2,3,4]$: $4$ vertices, $6$ edges, $4$ triangles,
@@ -1317,7 +1210,6 @@
         $k{=}2$ analogue of filling the triangle two slides ago.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=8]{Three sanity checks}
         \begin{block}{$\beta_0$ counts connected components}
             For a graph, $\rank\partial_1 = n_0-c$ where $c$ is the number of components. So
@@ -1341,7 +1233,6 @@
         torus $(1,2,1)$; disk $(1,0,0)$.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{What it costs, and why the answer is a shape invariant}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.49\textwidth}
@@ -1380,9 +1271,6 @@
         \end{alertblock}
     \end{frame}
 
-
-
-
     \section{4. Persistence}
 
     \begin{frame}[shrink=5]{Sweep $\varepsilon$ instead of choosing it}
@@ -1412,7 +1300,6 @@
         one dies. This makes the pairing well defined.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Barcodes and diagrams}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.58\textwidth}
@@ -1456,7 +1343,6 @@
         \end{columns}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=15]{The hexagon, end to end}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.45\textwidth}
@@ -1492,7 +1378,6 @@
   \node[right] at (2.45,1.35) {\scriptsize $\infty$};
   \node[left] at (-0.05,0.85) {\scriptsize $H_1$};
   \draw[very thick,red!80!black] (1,0.85)--(1.732,0.85);
-  % the octahedron-boundary void: real in the complex, not in the data (slide 41)
   \node[left] at (-0.05,0.35) {\scriptsize $H_2$};
   \draw[very thick,green!50!black,dashed] (1.732,0.35)--(2,0.35);
   \node[right,green!50!black] at (2.02,0.35) {\tiny artifact};
@@ -1510,7 +1395,6 @@
         \end{block}
     \end{frame}
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{The hexagon, actually computed}
         \computedfig[0.51]{talk_04_persistence}{%
@@ -1522,7 +1406,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}[shrink=8]{The hexagon's diagram, number by number}
         \begin{columns}[T,onlytextwidth]
@@ -1569,7 +1452,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=5]{Distance between diagrams: the bottleneck distance}
         \begin{block}{Bottleneck distance $\dB(D,D')$}
             Match the points of $D$ with the points of $D'$ one to one, where any point may
@@ -1609,7 +1491,6 @@
         becomes $[1.054,\sqrt3)$, and $\dB=0.054\le2\cdot0.1$. That inequality is the stability theorem, two slides on.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=5]{Bottleneck distance, precisely}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.55\textwidth}
@@ -1642,7 +1523,6 @@
                         \draw[gray] (\t,0.32)--(\t,0.28) node[below] {\tiny\t};}
                     \foreach \t in {0.5,1,1.5}{
                         \draw[gray] (0.32,\t)--(0.28,\t) node[left] {\tiny\t};}
-                    % the L-infinity ball of radius 0.1 around the loop: D' lands inside it
                     \draw[red!70!black,dashed] (0.9,1.632) rectangle (1.1,1.832);
                     \fill[blue!70!black] (1,1.732) circle (0.9pt);
                     \node[blue!70!black,left] at (0.9,1.78) {\scriptsize loop $(1,1.73)$};
@@ -1650,7 +1530,6 @@
                     \node[orange!85!black,right] at (1.12,1.62) {\scriptsize $(1.1,1.65)$};
                     \draw[->,red!70!black] (1.01,1.722) -- (1.085,1.66);
                     \node[red!70!black,right] at (1.1,1.86) {\tiny box of radius $0.1$};
-                    % the noise point, deleted onto the diagonal
                     \fill[orange!85!black] (0.6,0.7) circle (0.9pt);
                     \fill[red!70!black] (0.65,0.65) circle (0.6pt);
                     \draw[red!70!black] (0.6,0.7) -- (0.65,0.65);
@@ -1674,7 +1553,6 @@
         adds them up.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=5]{Computing the bottleneck distance}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.5\textwidth}
@@ -1716,7 +1594,6 @@
         same matrix, solved by the Hungarian algorithm.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=8]{Stability: why anyone trusts this}
         \begin{alertblock}{Stability, informally}
             Perturb the data a little and the diagram moves a little.
@@ -1752,7 +1629,6 @@
         \end{itemize}
     \end{frame}
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{Stability, measured rather than quoted}
         \computedfig[0.52]{talk_04_stability}{%
@@ -1764,7 +1640,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \begin{frame}{How it is computed (still linear algebra)}
         \small
         Order all $m$ simplices by insertion time and form the single boundary matrix
@@ -1797,7 +1672,6 @@
         \end{center}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Reading a diagram honestly}
         \small
         \begin{itemize}
@@ -1817,7 +1691,6 @@
         \end{itemize}
     \end{frame}
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{The three data sets from Part 1, answered}
         \computedfigside[0.62]{talk_01_motivation}{%
@@ -1831,9 +1704,6 @@
             ($1.4\times$ in $H_0$, $1.2\times$ in $H_1$).}{talk\_01\_motivation.py}
     \end{frame}
     \fi
-
-%======================================================================
-
 
     \section{Demo: TDA in an AI pipeline}
 
@@ -1856,7 +1726,6 @@
         \end{alertblock}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Vectorisations}
         \small
         \begin{block}{Betti curve}
@@ -1879,7 +1748,6 @@
         \end{block}
     \end{frame}
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{One diagram, three vectorisations, and a null model}
         \computedfigside[0.64]{talk_05_pipeline}{%
@@ -1890,7 +1758,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \begin{frame}{A typical pipeline}
         \begin{center}
             \resizebox{0.98\textwidth}{!}{%
@@ -1919,7 +1786,6 @@
         \end{itemize}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{What TDA looks like inside an AI research pipeline}
         \small
         \begin{itemize}
@@ -1948,9 +1814,6 @@
         \end{center}
     \end{frame}
 
-%======================================================================
-
-
     \section{The Hodge Laplacian}
 
     \begin{frame}{Redeeming the promise from Part 3}
@@ -1977,7 +1840,6 @@
             is exactly the graph Laplacian $D-A$ from Part 3} --- the promise, kept.
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=20]{The kernel is the homology}
         \begin{block}{One-line computation}
             For any $x\in C_k$,
@@ -2000,7 +1862,6 @@
             an orthogonal direct sum, and $\ker\partial_k=\im\partial_{k+1}\oplus\ker L_k$.
         \end{block}
 
-
         \vspace{0.3em}
         \begin{alertblock}{Consequence}
             \[
@@ -2013,7 +1874,6 @@
         \end{alertblock}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=12]{Back to the triangle}
         Same $\partial_1,\partial_2$ as in Part 3. Multiply them out:
 
@@ -2065,7 +1925,6 @@
         \end{center}
     \end{frame}
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{\emph{Where} is the loop? The harmonic answer}
         \computedfig[0.50]{talk_06_hodge_laplacian}{%
@@ -2078,7 +1937,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \begin{frame}{Quick check: the spectrum sees more than $\beta_k$ does}
         \small
         \begin{enumerate}
@@ -2105,7 +1963,6 @@
         \end{alertblock}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=12]{Why this matters for AI research specifically}
         \small
         \begin{enumerate}
@@ -2131,9 +1988,6 @@
             \emph{(Wang--Nguyen--Wei 2020; M\'emoli--Wan--Wang 2022, stability.)}
         \end{enumerate}
     \end{frame}
-
-%======================================================================
-
 
     \section{Wrap-up \& exercise}
 
@@ -2168,7 +2022,6 @@
         \end{alertblock}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}{Exercise}
         \begin{columns}[T,onlytextwidth]
             \begin{column}{0.36\textwidth}
@@ -2213,7 +2066,6 @@
         \end{columns}
     \end{frame}
 
-%----------------------------------------------------------------------
     \ifcomputedslides
     \begin{frame}{The exercise, checked --- and both halves of the talk agreeing}
         \computedfig[0.54]{talk_07_exercise}{%
@@ -2226,7 +2078,6 @@
     \end{frame}
     \fi
 
-%----------------------------------------------------------------------
     \begin{frame}[shrink=10]{Where to go next}
         \scriptsize
         \begin{block}{Classic TDA}
@@ -2250,7 +2101,7 @@
         \end{block}
         \begin{block}{Code}
             \texttt{pip install ripser persim gudhi giotto-tda} --- then reproduce today's hexagon,
-            and try the four-liner on one of your own embeddings.
+            and run the Rips pipeline on one of your own embeddings.
 
             \vspace{0.3em}
             Every computed figure in this deck comes from the accompanying repository, which
@@ -2260,25 +2111,23 @@
         \end{block}
     \end{frame}
 
-%----------------------------------------------------------------------
     \begin{frame}[standout]
   Questions?
     \end{frame}
 
-%======================================================================
     \appendix
 
-    \begin{frame}{Appendix: still optional, if there is time left over}
+    \begin{frame}{Appendix: going further}
         \small
-        Everything from the original ``2-hour appendix'' (the graph warm-up, the
-        tetrahedron, \v{C}ech/alpha, the Laplacian exercise) now lives in the main talk.
-        What remains here is genuinely extra: a worked figure-eight (two loops sharing a
-        vertex, $\beta_1=2$) and a pointer for anyone who wants to keep going.
+        The figure-eight --- two loops sharing a vertex, $\beta_1=2$ --- is worked in the
+        right-hand panel of the exercise check, both as an abstract complex and from a point
+        cloud, using nothing but pairwise distances.
 
         \vspace{0.6em}
         \begin{block}{Take-home problem}
             Take an embedding you already have (sentence embeddings, a hidden layer, a t-SNE
-            input \emph{before} projection) and reproduce the four-line pipeline from Part 5.
+            input \emph{before} projection) and run the Rips pipeline from Part 5 on it, for
+            example with \texttt{ripser}.
             Compare the $H_1$ barcode of the real data against a Gaussian-noise baseline of the
             same size and dimension. Is there a bar that clearly survives the comparison?
         \end{block}
