@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.13)  3 OCT 2026 02:07
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.12.13)  3 OCT 2026 02:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1861,7 +1861,7 @@ File: output/talk_04_stability.png Graphic file (type bmp)
 File: output/talk_04_signal_vs_noise.png Graphic file (type bmp)
 <output/talk_04_signal_vs_noise.png>
 
-Overfull \vbox (0.79991pt too high) detected at line 1712
+Overfull \vbox (0.18474pt too high) detected at line 1712
  []
 
 [53
@@ -1987,4 +1987,4 @@ Here is how much of TeX's memory you used:
  1348 hyphenation exceptions out of 8191
  128i,15n,142p,1878b,1084s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on tda_ai_2h_1.xdv (75 pages, 679244 bytes).
+Output written on tda_ai_2h_1.xdv (75 pages, 679212 bytes).
