@@ -93,9 +93,9 @@ def main() -> None:
     # ---------------------------------------------------------------- figure
     # Both thresholds are lines parallel to the diagonal: a point (b, d) has
     # persistence d - b, so "longer than t" means "above the line d = b + t".
-    order = ["(b) a loop", "(a) a blob", "(c) two clusters"]
+    order = ["(a) a blob", "(b) a loop", "(c) two clusters"]
     top = max(float(finite(found[n, "h1"][0])[:, 1].max()) for n in order)
-    figure, axes = plt.subplots(1, 3, figsize=(13.0, 4.6), facecolor=viz.SURFACE)
+    figure, axes = plt.subplots(1, 3, figsize=(10.5, 3.9), facecolor=viz.SURFACE)
     for ax, name in zip(axes, order):
         h1, null95, band = found[name, "h1"]
         real = all(found[name, 1])
@@ -104,7 +104,10 @@ def main() -> None:
         lo, hi = ax.get_xlim()
         xs = np.array([lo, hi])
         ax.fill_between(xs, xs, xs + band, color=viz.DIM_COLORS[0], alpha=0.16,
-                        linewidth=0, zorder=1, label=f"bootstrap band, 2c = {band:.2f}")
+                        linewidth=0, zorder=1)
+        # the band's top edge, drawn as a line so both thresholds read as lines
+        ax.plot(xs, xs + band, color=viz.DIM_COLORS[0], linewidth=1.4, zorder=2,
+                label=f"bootstrap band, 2c = {band:.2f}")
         ax.plot(xs, xs + null95, color=viz.INK_SECONDARY, linestyle="--", linewidth=1.2,
                 zorder=2, label=f"null 95%, {null95:.2f}")
         # no H1 class lives forever here, so crop away the empty infinity line
@@ -114,9 +117,8 @@ def main() -> None:
         legend = ax.legend(frameon=False, loc="lower right", fontsize=9)
         for text in legend.get_texts():
             text.set_color(viz.INK_SECONDARY)
-    figure.suptitle(r"$H_1$ of the three Part 1 clouds: only a point above both lines is a feature",
-                    color=viz.INK, fontsize=13, x=0.01, ha="left", fontweight="bold")
-    figure.tight_layout(rect=(0, 0, 1, 0.92))
+    # no title of its own: the slide caption says what to read off it
+    figure.tight_layout()
     print("\nwrote", viz.save(figure, out("talk_04_signal_vs_noise.png")))
 
     print("\nVerdict")
